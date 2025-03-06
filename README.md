@@ -51,6 +51,25 @@ La aplicación está estructurada utilizando principios de programación orienta
 - **Simulación (Simulation)**: Orquesta la lógica de movimiento de zombis y rastrea el estado del juego
 - **ZombieSimulationCLI**: Proporciona la interfaz de línea de comandos para la interacción del usuario
 
+## Estructura del Proyecto
+
+La organización de archivos y carpetas del proyecto es la siguiente:
+
+```
+├── README.md             # Documentación del proyecto
+├── run.py                # Punto de entrada para ejecutar la aplicación
+├── .gitignore            # Archivos y carpetas ignorados por git
+├── src/                  # Código fuente principal
+│   ├── main.py           # CLI principal para interacción del usuario
+│   ├── simulation.py     # Lógica de simulación de zombis
+│   └── models/           # Modelos de datos para la aplicación
+│       ├── __init__.py   # Inicializador del paquete models
+│       ├── building.py   # Clase Edificio
+│       ├── floor.py      # Clase Piso
+│       ├── room.py       # Clase Habitación 
+│       └── sensor.py     # Clase Sensor
+```
+
 ### Lógica de Movimiento de Zombis
 
 - Los zombis se propagan a habitaciones adyacentes en cada turno
