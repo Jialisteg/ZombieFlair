@@ -1,10 +1,12 @@
-# Simulación de Sensores IoT con Zombis
+# Simulación de Sensores IoT de flair con Zombies
 
 Una aplicación CLI en Python que simula un edificio infestado de zombis, utilizando sensores IoT para rastrear la invasión.
 
 ## Descripción
 
-Esta aplicación simula un escenario donde un edificio está infestado de zombis, y se utilizan sensores IoT para detectar su presencia. El usuario puede configurar el edificio, añadir zombis iniciales y simular la propagación de la infestación turno por turno.
+Esta aplicación simula un escenario donde un edificio está infestado de zombis, y se utilizan sensores IoT para detectar su presencia. El usuario puede configurar el edificio, añadir zombies iniciales y simular la propagación de la infestación turno por turno.
+
+
 
 ## Características
 
@@ -14,7 +16,7 @@ Esta aplicación simula un escenario donde un edificio está infestado de zombis
 - Rastrear el estado de cada habitación y sensor
 - Limpiar habitaciones de zombis
 - Restablecer sensores que han sido activados
-- Uso del arma secreta para eliminar zombis aleatoriamente
+- Uso del ARMA SECRETA 
 - Agregar zombis manualmente durante la simulación
 - Activar/desactivar la generación automática de zombis
 - Visualización mejorada del edificio con formato compacto
@@ -254,79 +256,107 @@ La aplicación utiliza un archivo de configuración `config.yaml` que permite pe
 
 Puede editar este archivo para ajustar el comportamiento de la aplicación según sus preferencias.
 
-## New Feature: Interactive Web Visualization
+## Nueva Funcionalidad: Visualización Web Interactiva
 
-In addition to the CLI interface, this project now includes a modern web-based visualization built with FastAPI and React.
+Además de la interfaz CLI, este proyecto ahora incluye una visualización web construida con FastAPI y React.
 
-### Backend API (FastAPI)
+## Instrucciones para Ejecutar la Aplicación Localmente
 
-The FastAPI backend provides a RESTful API for interacting with the simulation:
+### Requisitos Previos
 
-#### Running the API Server
+- Python 3.9+
+- Node.js 18+
+- npm 8+
 
-1. Install the required dependencies:
+### Ejecutar el Backend (FastAPI)
+
+1. Navega al directorio api:
+   ```bash
+   cd api
    ```
+
+2. Instala las dependencias:
+   ```bash
    pip install -r requirements.txt
    ```
 
-2. Start the FastAPI server:
+3. Ejecuta el servidor de desarrollo:
+   ```bash
+   uvicorn index:app --host 0.0.0.0 --port 5000 --reload
    ```
-   python run_api.py
-   ```
 
-3. The API will be available at http://localhost:5000
-   - Interactive API documentation is available at: http://localhost:5000/docs
-   - Alternative API documentation: http://localhost:5000/redoc
+El backend estará disponible en [http://localhost:5000](http://localhost:5000)
 
-### Frontend (React)
+### Ejecutar el Frontend (React)
 
-The React frontend provides a beautiful, interactive visualization of the building simulation:
-
-#### Running the Frontend
-
-1. Navigate to the frontend directory:
-   ```
+1. Abre una nueva terminal y navega al directorio frontend:
+   ```bash
    cd frontend
    ```
 
-2. Install the required dependencies:
-   ```
+2. Instala las dependencias:
+   ```bash
    npm install
    ```
 
-3. Start the development server:
-   ```
+3. Inicia el servidor de desarrollo:
+   ```bash
    npm start
    ```
 
-4. The web interface will be available at http://localhost:3000
+El frontend estará disponible en [http://localhost:3000](http://localhost:3000)
 
-### Features of the Web Interface
+## Verificación de Funcionamiento
 
-- **Building Visualization**: Interactive 3D-like representation of the building with all floors and rooms
-- **Real-time Updates**: See the simulation update in real-time
-- **Detailed Statistics**: Track the infestation rate and other metrics with charts and graphs
-- **Full Control**: All simulation commands available through an intuitive interface
-- **Room Selection**: Click on rooms to perform targeted actions like cleaning or resetting sensors
-- **Auto-run Mode**: Let the simulation run automatically with a configurable interval
+1. Verifica el API: Abre [http://localhost:5000/api/simulation/state](http://localhost:5000/api/simulation/state) en tu navegador para comprobar que el API responde correctamente.
 
-### Deployment
+2. Usa la interfaz: Abre [http://localhost:3000](http://localhost:3000) para interactuar con la aplicación completa.
 
-To deploy the application:
+## Solución de Problemas Comunes
 
-1. Build the React frontend:
-   ```
-   cd frontend
-   npm run build
-   ```
+- **Error "Module not found"**: Asegúrate de que estás ejecutando los comandos desde los directorios correctos.
+- **Problemas de conexión entre frontend y backend**: Verifica que el archivo `frontend/src/api/simulationApi.js` esté configurado para usar `http://localhost:5000/api` en desarrollo.
 
-2. Serve the FastAPI application with a production ASGI server like Uvicorn or Hypercorn:
-   ```
-   uvicorn src.api:app --host 0.0.0.0 --port 5000
-   ```
+## Opciones de Despliegue
 
-3. For production deployment, consider using a process manager like Supervisor or PM2, and a reverse proxy like Nginx.
+### Vercel
 
-## Licencia
+La aplicación está configurada para ser desplegada en Vercel:
 
-Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles. 
+1. Frontend:
+   - Conecta tu repositorio a Vercel
+   - Establece el directorio raíz como "frontend"
+   - Framework preset: Create React App
+
+2. Backend:
+   - Crea un nuevo proyecto para el backend
+   - Establece el directorio raíz como "api"
+   - Asegúrate de que el frontend esté configurado para usar la URL correcta del backend
+
+## Estructura del Proyecto
+
+- `api/`: Backend de FastAPI
+- `frontend/`: Frontend de React
+- `src/`: Código fuente Python de la simulación
+- `tests/`: Pruebas automatizadas (Falta por terminar)
+
+
+
+
+## Updates y futuras implementaciones
+### Se agregan escaleras para el desplazamiento vertical (en un lugar fijo).
+
+### Se agrega nuevo modo: Salvando a un practicante (en desarrollo)
+
+Un día que fallaron los sensores, se decidió mandar a un pobre practicante al edificio de un cliente muy importante, para poder investigar la falla en cuestión. Ese mismo día comenzó un apocalipsis zombie: En este modo se agrega un practicante al edificio, el cual debe evitar a los zombies. Para ello, decide avanzar e ir escondiéndose en habitaciones. El problema es que en este modo, las puertas se abren de manera automática (como en los malls), a menos que se bloqueen remotamente por sus compañeros de trabajo desde la oficina.
+
+El equipo del practicante deberá entonces bloquear remotamente las puertas de las habitaciones en donde se encuentre el practicante. Usted toma el rol de ingeniero IoT que intentará salvar al practicante utilizando la información de los sensores que se activan cuando los zombies pasan por cada habitación. Si se activa el sensor adyacente al practicante, indica que hay un zombie cerca y el practicante debería esconderse en la habitación, pero se debe tener en cuenta de que el zombie puede entrar a la habitación antes de que las puertas se alcancen a cerrar de manera remota.
+
+- Esconderse en la habitación toma un turno
+- Activar el cierre de puertas de manera remota toma dos turnos a partir de que el practicante entra a la habitación. Si el practicante escapa cuando tiene un zombie a una celda de distancia, el zombie alcanzaría a entrar a la habitación. 
+
+### Se modifica la agresividad de los zombies (se mueven de manera random hasta que tienen al practicante a algún rango "n" de distancia y luego van directamente hacia él).
+
+### Se agrega el arma secreta:
+
+Cuando todo está perdido, se agrega un botón de utilizar arma secreta que permitirá cumplir todos los sueños de la empresa, salvar al practicante, triplicar la producción y ganar la felicidad absoluta.

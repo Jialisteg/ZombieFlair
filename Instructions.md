@@ -1,5 +1,7 @@
 Ok let's try to solve this in under an hour. Here are my insights so far:
 
+0.- When writing variables, write a fully understandable name (for example: use sensorTemperature=32 instead of st=32). This is probably the most important feature for collaborative work. We need other people to understand this coding.
+
 1.- I need to solve the problem from "Enunciado.md" (Create all the files and folders neccesary).
 
 2.- All the prints and documentation (docstrings and comments) must be in SPANISH.
@@ -29,4 +31,30 @@ Here are a few important tests that I can think of:
 
     -test_sensor_alerts_when_zombie_enters_room:  If a zombie enters a room, the sensor must be activated.
 
-    -test_two_zombies_one_room: If two zombies are in one room, they should not merge as one. They have to keep moving a two separate zombies.
+    -test_two_zombies_one_room: If two zombies are in one room, they should not merge as one. They have to keep moving a two 
+    separate zombies.
+Let's work on a few tests depending on the core functionalities of each element.
+
+7.- If this was a real project, we could implement a changelog as well. That could be very useful.
+
+Back-End: Wrapping: Check the main functions and add inline comments to explain functionality. Don't leave anything to imagination. Good documentation is key for working with others and scaling projects.
+
+----------------------------------------------------------------------------------------------------
+Instructions added after back-end is working:
+
+
+8.- Let's add a web visualization of the same simulation by using FastAPI and React (we could also go with, idk Flask and Nodejs).
+
+There are so many options in this field, we could use Angular, VueJS, or simply ignore the front-end (bruh please don't).
+
+----------------------------------------------------------------------------------------------------
+9.- After this is properly set, we should focus on deployment (finally) maybe docker for backend, and vercel (?) for front-end since this is a light project. We could also go straight to AWS as well.
+
+----------------------------------------------------------------------------------------------------
+
+
+After all the steps: 
+
+- Update Readme.md once again so that others can know what changes or implementations you're currently working on.
+- Commit if neccesary.
+- Be happy
