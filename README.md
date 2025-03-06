@@ -126,7 +126,7 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │   │   ├── room.py       # Clase Habitación 
 │   │   ├── staircase.py  # Clase Escalera
 │   │   ├── sensor.py     # Clase Sensor
-│   │   └── practicante.py # Clase Practicante
+│   │   └── practicante.py # Clase Practicante (Nueva)
 │   └── api/              # Componentes específicos de la API dentro de src
 ├── tests/                # Pruebas unitarias
 │   ├── __init__.py       # Inicializador del paquete tests
