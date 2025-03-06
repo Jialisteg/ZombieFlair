@@ -67,6 +67,7 @@ La aplicación está estructurada utilizando principios de programación orienta
 - **Habitación (Room)**: Representa un espacio físico que puede contener zombis y tiene un sensor
 - **Escalera (Staircase)**: Un tipo especial de habitación que permite el movimiento vertical entre pisos
 - **Sensor**: Detecta la presencia de zombis y puede estar en estado "normal" o "alerta"
+- **Practicante**: Representa al interno que se mueve por el edificio y debe ser protegido de los zombis
 - **Simulación (Simulation)**: Orquesta la lógica de movimiento de zombis y rastrea el estado del juego
 - **ZombieSimulationCLI**: Proporciona la interfaz de línea de comandos para la interacción del usuario
 
@@ -91,7 +92,8 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │       ├── floor.py      # Clase Piso
 │       ├── room.py       # Clase Habitación 
 │       ├── staircase.py  # Clase Escalera
-│       └── sensor.py     # Clase Sensor
+│       ├── sensor.py     # Clase Sensor
+│       └── practicante.py # Clase Practicante
 ├── tests/                # Pruebas unitarias
 │   ├── __init__.py       # Inicializador del paquete tests
 │   ├── conftest.py       # Configuración y fixtures para tests
@@ -106,11 +108,11 @@ La visualización del edificio se muestra en un formato claro y compacto:
 ```
 Piso 1:
   Esc 0           Hab 1          Hab 2          Hab 3
-  [🧟 🪜 🟢]       [   🚪 🟢]       [   🚪 🟢]       [   🚪 🟢]
+  [🧟 🪜 🟢   ]     [   🚪 🟢   ]     [   🚪 🟢   ]     [   🚪 🟢   ]
 
 Piso 0:
   Esc 0           Hab 1          Hab 2          Hab 3
-  [   🪜   ]       [   🚪 🟢]       [🧟 🚪 🚨]       [   🚪 🟢]
+  [   🪜      ]     [   🚪 🟢 🚶]     [🧟 🚪 🚨   ]     [   🚪 🟢   ]
 ```
 
 Donde:
@@ -121,6 +123,7 @@ Donde:
 - `🚪`: Puerta (habitación regular)
 - `🚨`: Sensor en estado de alerta
 - `🟢`: Sensor en estado normal
+- `🚶`: Practicante (debe ser protegido de los zombies)
 
 ### Lógica de Movimiento de Zombis
 
@@ -130,7 +133,7 @@ Donde:
 - Las escaleras permiten a los zombis moverse hacia el piso superior o inferior
 - Las escaleras NO tienen sensores, pero permiten la propagación vertical de zombis
 - Cuando los zombis entran en una habitación normal, el sensor entra en estado de alerta
-- La simulación termina cuando todas las habitaciones están infestadas
+- La simulación termina cuando todas las habitaciones están infestadas o un zombi captura al practicante
 
 ### Funcionalidades Adicionales
 
@@ -139,8 +142,13 @@ Donde:
    - Cada zombi tiene 50% de probabilidad de ser eliminado
    - Los sensores permanecen en alerta incluso si los zombis son eliminados
 
-2. **Practicante**:
-   - Funcionalidad en desarrollo para implementaciones futuras
+2. **Practicante (Interno)**:
+   - Simbolizado por el icono 🚶
+   - Solo puede haber un practicante a la vez en el edificio
+   - Se mueve automáticamente en cada turno a habitaciones adyacentes sin zombis
+   - No activa los sensores al entrar en una habitación
+   - Si un zombi llega a la misma habitación que el practicante, el juego termina
+   - Añade un elemento de estrategia, ya que debes mantenerlo protegido de los zombis
 
 3. **Entrada Validada**:
    - Durante la configuración, se validan todas las entradas

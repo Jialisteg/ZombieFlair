@@ -1,6 +1,7 @@
 import random
 from src.models.building import Building
 from src.models.staircase import Staircase
+from src.models.practicante import Practicante
 from src import logger
 
 class Simulation:
@@ -13,6 +14,8 @@ class Simulation:
         self.building = None
         self.turn = 0
         self.zombie_generation_enabled = False
+        self.practicante = None
+        self.game_over_reason = None
         logger.info("Simulación inicializada")
     
     def toggle_zombie_generation(self):
@@ -25,7 +28,7 @@ class Simulation:
     def generate_random_zombie(self):
         """Genera un nuevo zombi en una habitación aleatoria que no tenga zombis."""
         if not self.building:
-            return False
+            return False, None, None
 
         # Obtener todas las habitaciones sin zombis
         available_rooms = []
@@ -36,7 +39,7 @@ class Simulation:
 
         if not available_rooms:
             logger.debug("No hay habitaciones disponibles para generar un nuevo zombi")
-            return False
+            return False, None, None
 
         # Seleccionar una habitación aleatoria
         floor_idx, room_idx = random.choice(available_rooms)
@@ -44,19 +47,27 @@ class Simulation:
         room.add_zombies()  # Usar el método específico de la clase
         
         logger.debug(f"Nuevo zombi generado en piso {floor_idx}, habitación {room_idx}")
-        return True
+        return True, floor_idx, room_idx
     
     def add_random_zombie(self):
         """
         Agrega un nuevo zombi en una habitación aleatoria (invocado por el usuario).
         
         Returns:
-            bool: True si se pudo agregar el zombi, False en caso contrario
+            dict: Información sobre el zombi añadido, o error si no se pudo añadir
         """
-        success = self.generate_random_zombie()
+        success, floor_idx, room_idx = self.generate_random_zombie()
         if success:
-            logger.info("Usuario agregó un nuevo zombi manualmente")
-        return success
+            logger.info(f"Usuario agregó un nuevo zombi manualmente en piso {floor_idx}, habitación {room_idx}")
+            return {
+                "added": True,
+                "floor": floor_idx,
+                "room": room_idx
+            }
+        else:
+            return {
+                "added": False
+            }
     
     def use_secret_weapon(self):
         """
@@ -109,6 +120,10 @@ class Simulation:
         staircases_count = floors_count  # Una escalera por piso
         normal_rooms_count = floors_count * rooms_per_floor  # Total de habitaciones regulares
         
+        # Reiniciar variables de estado
+        self.practicante = None
+        self.game_over_reason = None
+        
         return {
             "floors": floors_count,
             "rooms_per_floor": rooms_per_floor,
@@ -151,6 +166,132 @@ class Simulation:
             
         return zombies_added
     
+    def add_practicante(self):
+        """
+        Añade un practicante (interno) a una habitación aleatoria sin zombis.
+        
+        Returns:
+            dict: Información sobre el practicante añadido, o error si no se pudo añadir
+        """
+        if not self.building:
+            logger.warning("Intento de agregar practicante sin edificio configurado")
+            return {"error": "No hay edificio configurado"}
+        
+        # Si ya hay un practicante, no añadir otro
+        if self.practicante:
+            logger.warning("Ya existe un practicante en la simulación")
+            return {"error": "Ya existe un practicante en la simulación"}
+        
+        # Obtener todas las habitaciones normales sin zombis
+        available_rooms = []
+        for floor_idx, floor in enumerate(self.building.floors):
+            for room_idx, room in enumerate(floor.get_rooms()):
+                # Solo habitaciones regulares (no escaleras) y sin zombis
+                if room_idx > 0 and not room.has_zombies:
+                    available_rooms.append((floor_idx, room_idx))
+        
+        if not available_rooms:
+            logger.warning("No hay habitaciones disponibles para añadir un practicante")
+            return {"error": "No hay habitaciones disponibles para añadir un practicante"}
+        
+        # Seleccionar una habitación aleatoria
+        floor_idx, room_idx = random.choice(available_rooms)
+        
+        # Crear el practicante
+        self.practicante = Practicante(floor_idx, room_idx)
+        logger.info(f"Practicante añadido en piso {floor_idx}, habitación {room_idx}")
+        
+        return {
+            "added": True,
+            "floor": floor_idx,
+            "room": room_idx,
+            "message": f"Practicante añadido en piso {floor_idx}, habitación {room_idx}"
+        }
+    
+    def move_practicante(self):
+        """
+        Mueve el practicante a una habitación adyacente aleatoria sin zombis.
+        El practicante intentará evitar habitaciones adyacentes a zombis si es posible.
+        
+        Returns:
+            dict: Información sobre el movimiento, o None si no hay practicante
+        """
+        if not self.practicante:
+            return None
+        
+        floor_idx, room_idx = self.practicante.get_location()
+        current_room = self.building.get_floor(floor_idx).get_room(room_idx)
+        
+        # Obtener todas las habitaciones adyacentes
+        adjacent_rooms = []
+        dangerous_rooms = []  # Habitaciones adyacentes a zombis
+        
+        for adj_room in current_room.get_adjacent_rooms():
+            # Encontrar la ubicación (piso, habitación) de esta habitación adyacente
+            for adj_floor_idx, adj_floor in enumerate(self.building.floors):
+                for adj_room_idx, r in enumerate(adj_floor.get_rooms()):
+                    if r is adj_room:
+                        location = (adj_floor_idx, adj_room_idx)
+                        
+                        # Verificar si esta habitación tiene zombis
+                        if adj_room.has_zombies:
+                            # No incluir habitaciones con zombis
+                            continue
+                        
+                        # Verificar si esta habitación tiene zombis adyacentes
+                        has_adjacent_zombies = False
+                        for zombie_adj_room in adj_room.get_adjacent_rooms():
+                            if zombie_adj_room.has_zombies:
+                                has_adjacent_zombies = True
+                                break
+                        
+                        if has_adjacent_zombies:
+                            dangerous_rooms.append(location)
+                        else:
+                            adjacent_rooms.append(location)
+                        break
+        
+        # Verificar si la habitación actual tiene zombis adyacentes
+        current_has_adjacent_zombies = False
+        for zombie_adj_room in current_room.get_adjacent_rooms():
+            if zombie_adj_room.has_zombies:
+                current_has_adjacent_zombies = True
+                break
+        
+        # Prioridad: 
+        # 1. Habitaciones seguras (sin zombis adyacentes)
+        # 2. Habitaciones peligrosas (con zombis adyacentes) pero solo si la actual también es peligrosa
+        # 3. Quedarse donde está si no hay opción mejor
+        
+        if adjacent_rooms:
+            # Hay habitaciones seguras disponibles
+            new_floor_idx, new_room_idx = random.choice(adjacent_rooms)
+            logger.debug(f"Practicante movido de {floor_idx}-{room_idx} a {new_floor_idx}-{new_room_idx} (habitación segura)")
+        elif dangerous_rooms and current_has_adjacent_zombies:
+            # No hay habitaciones seguras, pero hay opciones menos peligrosas
+            new_floor_idx, new_room_idx = random.choice(dangerous_rooms)
+            logger.debug(f"Practicante movido de {floor_idx}-{room_idx} a {new_floor_idx}-{new_room_idx} (habitación peligrosa)")
+        else:
+            # Mejor quedarse donde está
+            new_floor_idx, new_room_idx = floor_idx, room_idx
+            logger.debug(f"Practicante se queda en {floor_idx}-{room_idx} (no hay rutas más seguras)")
+        
+        # Si hay que moverse, actualizar posición
+        if new_floor_idx != floor_idx or new_room_idx != room_idx:
+            self.practicante.move_to(new_floor_idx, new_room_idx)
+            return {
+                "moved": True,
+                "from": (floor_idx, room_idx),
+                "to": (new_floor_idx, new_room_idx)
+            }
+        else:
+            return {
+                "moved": False,
+                "from": (floor_idx, room_idx),
+                "to": (floor_idx, room_idx),
+                "message": "No hay rutas más seguras disponibles"
+            }
+    
     def advance_turn(self):
         """Avanza la simulación un turno."""
         if not self.building:
@@ -163,6 +304,12 @@ class Simulation:
         newly_infested = []
         vacated_rooms = []
         new_zombie_generated = False
+        new_zombie_location = None
+        practicante_moved = None
+
+        # Si hay un practicante, moverlo primero
+        if self.practicante:
+            practicante_moved = self.move_practicante()
 
         # Para cada piso y habitación con zombis, mover el zombi a UNA habitación adyacente
         zombie_movements = []  # Lista para guardar los movimientos a realizar
@@ -213,19 +360,24 @@ class Simulation:
             newly_infested.append((to_floor, to_room))
             
             logger.debug(f"Zombi movido de piso {from_floor}, habitación {from_room} a piso {to_floor}, habitación {to_room}")
+            
+            # Verificar si el zombi ha alcanzado al practicante
+            if self.practicante and self.practicante.floor_number == to_floor and self.practicante.room_number == to_room:
+                self.game_over_reason = "practicante_capturado"
+                logger.info(f"¡Juego terminado! Un zombi ha capturado al practicante en piso {to_floor}, habitación {to_room}")
 
         # Generar un nuevo zombi si está activada la generación
         if self.zombie_generation_enabled:
-            new_zombie_generated = self.generate_random_zombie()
+            success, floor_idx, room_idx = self.generate_random_zombie()
+            new_zombie_generated = success
+            if success:
+                new_zombie_location = (floor_idx, room_idx)
 
         # Verificar si todas las habitaciones están infestadas
         total_infested = sum(1 for floor in self.building.floors 
                            for room in floor.get_rooms() if room.has_zombies)
         total_rooms = sum(len(floor.get_rooms()) for floor in self.building.floors)
-        game_over = total_infested == total_rooms
-
-        if game_over:
-            logger.info("Juego terminado: todas las habitaciones están infestadas")
+        game_over = total_infested == total_rooms or self.game_over_reason is not None
 
         return {
             "turn": self.turn,
@@ -233,7 +385,10 @@ class Simulation:
             "vacated_rooms": vacated_rooms,
             "total_infested": total_infested,
             "game_over": game_over,
-            "new_zombie_generated": new_zombie_generated
+            "game_over_reason": self.game_over_reason,
+            "new_zombie_generated": new_zombie_generated,
+            "new_zombie_location": new_zombie_location,
+            "practicante_moved": practicante_moved
         }
     
     def clean_room(self, floor_number, room_number):
@@ -328,7 +483,9 @@ class Simulation:
             "rooms_per_floor": len(self.building.floors[0].get_rooms()) if self.building.floors else 0,
             "total_rooms": total_rooms,
             "infested_rooms": total_infested,
-            "game_over": total_infested == total_rooms
+            "game_over": total_infested == total_rooms or self.game_over_reason is not None,
+            "game_over_reason": self.game_over_reason,
+            "practicante": self.practicante.get_location() if self.practicante else None
         }
         
         logger.debug(f"Estado actual del edificio: {state}")
@@ -336,13 +493,16 @@ class Simulation:
     
     def is_game_over(self):
         """
-        Comprueba si el juego ha terminado (todas las habitaciones infestadas).
+        Comprueba si el juego ha terminado (todas las habitaciones infestadas o el practicante ha sido capturado).
         
         Returns:
             bool: True si el juego ha terminado, False en caso contrario
         """
         if not self.building:
             return False
+            
+        if self.game_over_reason is not None:
+            return True
             
         total_infested = sum(1 for floor in self.building.floors 
                            for room in floor.get_rooms() if room.has_zombies)

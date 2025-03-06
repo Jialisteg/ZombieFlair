@@ -1,0 +1,8 @@
+[2025-03-06 15:04:32,745] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 15:04:32,745] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 15:04:32,745] INFO - Simulación inicializada
+[2025-03-06 15:04:38,575] INFO - Edificio configurado con 3 pisos y 2 habitaciones regulares por piso
+[2025-03-06 15:04:40,043] INFO - Añadiendo 2 zombis iniciales
+[2025-03-06 15:04:53,251] INFO - Edificio configurado con 4 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:04:53,822] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:06:02,090] INFO - Aplicación interrumpida por el usuario (KeyboardInterrupt)

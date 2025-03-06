@@ -1,0 +1,11 @@
+[2025-03-06 14:44:22,510] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 14:44:22,510] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 14:44:22,510] INFO - Simulación inicializada
+[2025-03-06 14:45:13,229] INFO - Edificio configurado con 3 pisos y 2 habitaciones regulares por piso
+[2025-03-06 14:45:15,575] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 14:45:21,069] DEBUG - Modo DEBUG activado
+[2025-03-06 14:45:23,327] DEBUG - Estado actual del edificio: {'turn': 0, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 1, 'game_over': False, 'game_over_reason': None, 'practicante': None}
+[2025-03-06 14:45:25,738] INFO - Modo DEBUG desactivado
+[2025-03-06 14:45:42,970] INFO - Practicante añadido en piso 0, habitación 2
+[2025-03-06 14:46:00,876] INFO - ¡Juego terminado! Un zombi ha capturado al practicante en piso 0, habitación 1
+[2025-03-06 14:46:44,985] INFO - Aplicación interrumpida por el usuario (KeyboardInterrupt)
