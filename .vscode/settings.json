@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.cwd": "${workspaceFolder}",
+    "python.defaultInterpreterPath": "python",
+    "python.terminal.activateEnvironment": true,
+    "terminal.integrated.defaultProfile.windows": "PowerShell"
+}
