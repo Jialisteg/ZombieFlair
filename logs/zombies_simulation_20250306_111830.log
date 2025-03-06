@@ -1,0 +1,63 @@
+[2025-03-06 11:18:30,181] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 11:18:30,181] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 11:18:42,859] INFO - Configurando edificio: 3 pisos, 3 habitaciones por piso
+[2025-03-06 11:18:44,917] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 11:18:44,917] INFO - Zombis iniciales añadidos: 1 de 1 solicitados
+[2025-03-06 11:19:00,610] DEBUG - Modo DEBUG activado
+[2025-03-06 11:19:03,906] DEBUG - Estado actual del edificio: {'turn': 0, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 1, 'game_over': False}
+[2025-03-06 11:19:08,094] INFO - Avanzando al turno 1
+[2025-03-06 11:19:08,094] DEBUG - Habitaciones con zombis antes del movimiento: 1
+[2025-03-06 11:19:08,094] DEBUG - Habitación 0-0 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:08,095] DEBUG - Nueva infestación en habitación 0-1
+[2025-03-06 11:19:08,095] DEBUG - Nueva infestación en habitación 1-0
+[2025-03-06 11:19:08,095] INFO - Turno 1 completado: 2 nuevas infestaciones, 3 total
+[2025-03-06 11:19:08,118] DEBUG - Estado actual del edificio: {'turn': 1, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 3, 'game_over': False}
+[2025-03-06 11:19:14,783] DEBUG - Estado actual del edificio: {'turn': 1, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 3, 'game_over': False}
+[2025-03-06 11:19:17,243] INFO - Avanzando al turno 2
+[2025-03-06 11:19:17,243] DEBUG - Habitaciones con zombis antes del movimiento: 3
+[2025-03-06 11:19:17,244] DEBUG - Habitación 0-0 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:17,244] DEBUG - Habitación 0-1 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:17,245] DEBUG - Nueva infestación en habitación 0-2
+[2025-03-06 11:19:17,246] DEBUG - Nueva infestación en habitación 1-1
+[2025-03-06 11:19:17,246] DEBUG - Habitación 1-0 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:17,247] DEBUG - Nueva infestación en habitación 2-0
+[2025-03-06 11:19:17,247] INFO - Turno 2 completado: 3 nuevas infestaciones, 6 total
+[2025-03-06 11:19:17,269] DEBUG - Estado actual del edificio: {'turn': 2, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 6, 'game_over': False}
+[2025-03-06 11:19:18,156] DEBUG - Estado actual del edificio: {'turn': 2, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 6, 'game_over': False}
+[2025-03-06 11:19:18,760] INFO - Avanzando al turno 3
+[2025-03-06 11:19:18,761] DEBUG - Habitaciones con zombis antes del movimiento: 6
+[2025-03-06 11:19:18,761] DEBUG - Habitación 0-0 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:18,761] DEBUG - Habitación 0-1 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:18,762] DEBUG - Habitación 0-2 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:18,762] DEBUG - Nueva infestación en habitación 1-2
+[2025-03-06 11:19:18,762] DEBUG - Habitación 1-0 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:18,762] DEBUG - Habitación 1-1 tiene 4 habitaciones adyacentes
+[2025-03-06 11:19:18,763] DEBUG - Nueva infestación en habitación 2-1
+[2025-03-06 11:19:18,763] DEBUG - Habitación 2-0 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:18,763] INFO - Turno 3 completado: 2 nuevas infestaciones, 8 total
+[2025-03-06 11:19:18,781] DEBUG - Estado actual del edificio: {'turn': 3, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 8, 'game_over': False}
+[2025-03-06 11:19:19,645] DEBUG - Estado actual del edificio: {'turn': 3, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 8, 'game_over': False}
+[2025-03-06 11:19:22,820] INFO - Avanzando al turno 4
+[2025-03-06 11:19:22,821] DEBUG - Habitaciones con zombis antes del movimiento: 8
+[2025-03-06 11:19:22,821] DEBUG - Habitación 0-0 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:22,821] DEBUG - Habitación 0-1 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:22,821] DEBUG - Habitación 0-2 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:22,822] DEBUG - Habitación 1-0 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:22,822] DEBUG - Habitación 1-1 tiene 4 habitaciones adyacentes
+[2025-03-06 11:19:22,822] DEBUG - Habitación 1-2 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:22,822] DEBUG - Nueva infestación en habitación 2-2
+[2025-03-06 11:19:22,822] DEBUG - Habitación 2-0 tiene 2 habitaciones adyacentes
+[2025-03-06 11:19:22,822] DEBUG - Habitación 2-1 tiene 3 habitaciones adyacentes
+[2025-03-06 11:19:22,823] INFO - ¡JUEGO TERMINADO! Todas las habitaciones han sido infestadas
+[2025-03-06 11:19:22,823] INFO - Turno 4 completado: 1 nuevas infestaciones, 9 total
+[2025-03-06 11:19:22,843] DEBUG - Estado actual del edificio: {'turn': 4, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 9, 'game_over': True}
+[2025-03-06 11:20:04,429] DEBUG - Estado actual del edificio: {'turn': 4, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 9, 'game_over': True}
+[2025-03-06 11:20:29,421] DEBUG - Estado actual del edificio: {'turn': 4, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 9, 'game_over': True}
+[2025-03-06 11:20:35,690] DEBUG - Estado actual del edificio: {'turn': 4, 'floors': 3, 'rooms_per_floor': 3, 'total_rooms': 9, 'infested_rooms': 9, 'game_over': True}
+[2025-03-06 11:20:48,485] INFO - Configurando edificio: 1 pisos, 5 habitaciones por piso
+[2025-03-06 11:20:48,486] DEBUG - Edificio configurado correctamente
+[2025-03-06 11:20:53,029] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 11:20:53,030] DEBUG - Zombi añadido a la habitación 0-2
+[2025-03-06 11:20:53,030] INFO - Zombis iniciales añadidos: 1 de 1 solicitados
+[2025-03-06 11:20:55,405] DEBUG - Estado actual del edificio: {'turn': 0, 'floors': 1, 'rooms_per_floor': 5, 'total_rooms': 5, 'infested_rooms': 1, 'game_over': False}
+[2025-03-06 11:21:44,795] INFO - Aplicación interrumpida por el usuario (KeyboardInterrupt)

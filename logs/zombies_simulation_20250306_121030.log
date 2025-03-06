@@ -1,0 +1,7 @@
+[2025-03-06 12:10:30,607] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 12:10:30,607] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 12:10:30,608] INFO - Simulación inicializada
+[2025-03-06 12:10:41,890] INFO - Configurando edificio: 5 pisos, 5 habitaciones por piso
+[2025-03-06 12:10:43,044] INFO - Añadiendo 2 zombis iniciales
+[2025-03-06 12:10:43,044] INFO - Zombis iniciales añadidos: 2 de 2 solicitados
+[2025-03-06 12:13:28,716] INFO - Aplicación terminada por el usuario

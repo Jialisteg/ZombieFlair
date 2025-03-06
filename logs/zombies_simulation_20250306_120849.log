@@ -1,0 +1,9 @@
+[2025-03-06 12:08:49,799] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 12:08:49,799] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 12:08:49,799] INFO - Simulación inicializada
+[2025-03-06 12:08:53,881] INFO - Configurando edificio: 5 pisos, 5 habitaciones por piso
+[2025-03-06 12:08:56,084] INFO - Añadiendo 2 zombis iniciales
+[2025-03-06 12:08:56,084] INFO - Zombis iniciales añadidos: 2 de 2 solicitados
+[2025-03-06 12:08:57,080] CRITICAL - Error inesperado: 'Building' object is not iterable
+Traceback:
+<traceback object at 0x00000130C6E97F80>

@@ -1,0 +1,8 @@
+[2025-03-06 12:13:32,848] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 12:13:32,848] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 12:13:32,848] INFO - Simulación inicializada
+[2025-03-06 12:13:42,440] INFO - Configurando edificio: 4 pisos, 4 habitaciones por piso
+[2025-03-06 12:13:43,696] INFO - Añadiendo 2 zombis iniciales
+[2025-03-06 12:13:43,696] CRITICAL - Error inesperado: Sensor.set_alert() takes 1 positional argument but 2 were given
+Traceback:
+<traceback object at 0x00000199F69C7780>

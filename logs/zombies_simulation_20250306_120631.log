@@ -1,0 +1,9 @@
+[2025-03-06 12:06:31,093] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 12:06:31,093] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 12:06:31,093] INFO - Simulación inicializada
+[2025-03-06 12:06:37,238] INFO - Configurando edificio: 5 pisos, 5 habitaciones por piso
+[2025-03-06 12:06:38,138] INFO - Añadiendo 2 zombis iniciales
+[2025-03-06 12:06:38,138] INFO - Zombis iniciales añadidos: 2 de 2 solicitados
+[2025-03-06 12:06:38,908] CRITICAL - Error inesperado: 'Simulation' object has no attribute 'game_over'
+Traceback:
+<traceback object at 0x0000028B07784040>
