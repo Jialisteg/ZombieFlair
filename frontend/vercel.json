@@ -2,15 +2,14 @@
   "name": "zombie-simulation-frontend",
   "version": 2,
   "public": true,
-  "build": {
-    "env": {
-      "REACT_APP_API_URL": "https://tu-api-url.vercel.app/api"
-    }
+  "framework": "create-react-app",
+  "env": {
+    "REACT_APP_API_URL": "https://tu-api-url.vercel.app/api"
   },
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://tu-api-url.vercel.app/api/:path*"
+      "destination": "https://tu-api-backend.vercel.app/api/:path*"
     }
   ]
 } 

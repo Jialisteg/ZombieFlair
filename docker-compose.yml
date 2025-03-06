@@ -1,16 +1,31 @@
 version: '3.8'
 
 services:
-  zombies-iot-simulation:
-    build: .
-    container_name: zombies-iot-simulation
-    volumes:
-      - ./logs:/app/logs
-    tty: true
-    stdin_open: true
-    environment:
-      - PYTHONUNBUFFERED=1
-      - PYTHONIOENCODING=UTF-8
-    # En caso de que se expanda a una aplicación web o API
+  # Servicio del backend
+  backend:
+    build: ./api
+    container_name: zombie-simulation-backend
     ports:
-      - "8000:8000" 
+      - "5000:5000"
+    volumes:
+      - ./api:/app
+      - ./src:/app/src
+    environment:
+      - DEBUG=1
+    networks:
+      - zombie-network
+
+  # Servicio del frontend
+  frontend:
+    build: ./frontend
+    container_name: zombie-simulation-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - zombie-network
+
+networks:
+  zombie-network:
+    driver: bridge 
