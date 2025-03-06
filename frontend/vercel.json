@@ -2,8 +2,7 @@
   "name": "zombie-simulation-frontend",
   "version": 2,
   "public": true,
-  "buildCommand": "npm install && npm run build",
-  "outputDirectory": "build",
+  "framework": "create-react-app",
   "env": {
     "REACT_APP_API_URL": "https://tu-api-url.vercel.app/api"
   },
