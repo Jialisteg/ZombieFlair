@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// Base URL for API requests - use environment variable or fallback to local development URL
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+// Base URL for API requests - Docker environment uses relative path
+const API_BASE_URL = '/api'; // Nginx redirigirá esto al contenedor backend
 
 // Create axios instance with default config
 const apiClient = axios.create({
