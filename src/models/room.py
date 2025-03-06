@@ -2,65 +2,65 @@ from src.models.sensor import Sensor
 
 class Room:
     """
-    Represents a room in a building that may contain zombies.
-    Each room has a sensor that detects zombie presence.
+    Representa una habitación en un edificio que puede contener zombis.
+    Cada habitación tiene un sensor que detecta la presencia de zombis.
     """
     
     def __init__(self, floor_number, room_number):
         """
-        Initialize a new room with a floor number and room number.
+        Inicializa una nueva habitación con un número de piso y número de habitación.
         
         Args:
-            floor_number (int): The floor number where this room is located
-            room_number (int): The room number on the floor
+            floor_number (int): El número de piso donde se encuentra esta habitación
+            room_number (int): El número de habitación en el piso
         """
         self.floor_number = floor_number
         self.room_number = room_number
         self.has_zombies = False
-        self.sensor = Sensor(f"F{floor_number}R{room_number}")
+        self.sensor = Sensor(f"P{floor_number}H{room_number}")
         self.adjacent_rooms = []
     
     def add_adjacent_room(self, room):
         """
-        Add an adjacent room that zombies can move to.
+        Añade una habitación adyacente a la que los zombis pueden moverse.
         
         Args:
-            room (Room): An adjacent room
+            room (Room): Una habitación adyacente
         """
         if room not in self.adjacent_rooms:
             self.adjacent_rooms.append(room)
     
     def add_zombies(self):
-        """Add zombies to the room and trigger the sensor."""
+        """Añade zombis a la habitación y activa el sensor."""
         self.has_zombies = True
         self.sensor.set_alert()
     
     def remove_zombies(self):
-        """Remove zombies from the room."""
+        """Elimina los zombis de la habitación."""
         self.has_zombies = False
-        # Note: We don't reset the sensor automatically
-        # as it would stay in alert until manually reset
+        # Nota: No restablecemos el sensor automáticamente
+        # ya que permanecería en alerta hasta que se restablezca manualmente
     
     def reset_sensor(self):
-        """Reset the room's sensor to normal state."""
+        """Restablece el sensor de la habitación al estado normal."""
         self.sensor.reset()
     
     def get_adjacent_rooms(self):
         """
-        Get all adjacent rooms.
+        Obtiene todas las habitaciones adyacentes.
         
         Returns:
-            list: A list of adjacent Room objects
+            list: Una lista de objetos Room adyacentes
         """
         return self.adjacent_rooms
     
     def __str__(self):
         """
-        String representation of the room.
+        Representación en cadena de texto de la habitación.
         
         Returns:
-            str: A string showing the room location and zombie status
+            str: Una cadena que muestra la ubicación de la habitación y el estado de los zombis
         """
-        status = "🧟 INFESTED" if self.has_zombies else "✅ CLEAR"
-        sensor_status = "🚨 ALERT" if self.sensor.is_alert() else "🟢 NORMAL"
-        return f"Room {self.floor_number}-{self.room_number}: {status} | Sensor: {sensor_status}" 
+        status = "🧟 INFESTADA" if self.has_zombies else "✅ DESPEJADA"
+        sensor_status = "🚨 ALERTA" if self.sensor.is_alert() else "🟢 NORMAL"
+        return f"Habitación {self.floor_number}-{self.room_number}: {status} | Sensor: {sensor_status}" 

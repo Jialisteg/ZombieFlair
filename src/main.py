@@ -6,64 +6,64 @@ from src.simulation import Simulation
 
 class ZombieSimulationCLI:
     """
-    Command-line interface for the Zombie IoT Sensor Simulation.
+    Interfaz de línea de comandos para la Simulación de Sensores IoT con Zombis.
     """
     
     def __init__(self):
-        """Initialize the CLI with a new simulation."""
+        """Inicializa el CLI con una nueva simulación."""
         self.simulation = Simulation()
         self.running = True
     
     def clear_screen(self):
-        """Clear the terminal screen."""
+        """Limpia la pantalla del terminal."""
         os.system('cls' if os.name == 'nt' else 'clear')
     
     def print_header(self):
-        """Print the application header."""
+        """Imprime el encabezado de la aplicación."""
         self.clear_screen()
         print("=" * 80)
-        print("🧟 ZOMBIE IOT SENSOR SIMULATION 🧟".center(80))
+        print("🧟 SIMULACIÓN DE SENSORES IOT CON ZOMBIS 🧟".center(80))
         print("=" * 80)
         print()
     
     def print_building_state(self):
-        """Print the current state of the building."""
+        """Imprime el estado actual del edificio."""
         if not self.simulation.building:
-            print("No building configured yet. Use option 1 to set up a building.")
+            print("No hay edificio configurado todavía. Use la opción 1 para configurar un edificio.")
             return
         
         state = self.simulation.get_building_state()
         
-        print(f"\nTurn: {state['turn']}")
-        print(f"Building Status: {state['infested_rooms']}/{state['total_rooms']} rooms infested")
+        print(f"\nTurno: {state['turn']}")
+        print(f"Estado del Edificio: {state['infested_rooms']}/{state['total_rooms']} habitaciones infestadas")
         print()
         
-        # Print each floor and its rooms
+        # Imprimir cada piso y sus habitaciones
         for floor_idx in range(len(self.simulation.building.floors)):
             floor = self.simulation.building.get_floor(floor_idx)
-            print(f"Floor {floor_idx}:")
+            print(f"Piso {floor_idx}:")
             
-            # Print rooms in a grid format
+            # Imprimir habitaciones en formato de cuadrícula
             rooms_per_row = 5
             rooms = floor.get_rooms()
             
             for i in range(0, len(rooms), rooms_per_row):
                 row_rooms = rooms[i:i+rooms_per_row]
                 
-                # Print room numbers
+                # Imprimir números de habitación
                 print("  ", end="")
                 for j, room in enumerate(row_rooms):
-                    print(f"Room {room.room_number}".ljust(15), end="")
+                    print(f"Hab {room.room_number}".ljust(15), end="")
                 print()
                 
-                # Print zombie status
+                # Imprimir estado de zombis
                 print("  ", end="")
                 for room in row_rooms:
                     status = "🧟" if room.has_zombies else "  "
                     print(f"[{status}]".ljust(15), end="")
                 print()
                 
-                # Print sensor status
+                # Imprimir estado del sensor
                 print("  ", end="")
                 for room in row_rooms:
                     sensor = "🚨" if room.sensor.is_alert() else "🟢"
@@ -73,51 +73,51 @@ class ZombieSimulationCLI:
             print()
         
         if self.simulation.is_game_over():
-            print("\n🚨 GAME OVER: All rooms have been infested with zombies! 🚨\n")
+            print("\n🚨 FIN DEL JUEGO: ¡Todas las habitaciones han sido infestadas con zombis! 🚨\n")
     
     def setup_building(self):
-        """Set up a new building for the simulation."""
+        """Configura un nuevo edificio para la simulación."""
         self.print_header()
-        print("BUILDING SETUP")
+        print("CONFIGURACIÓN DEL EDIFICIO")
         print("-" * 80)
         
         try:
-            floors_count = int(input("Enter number of floors: "))
+            floors_count = int(input("Ingrese número de pisos: "))
             if floors_count <= 0:
-                print("Number of floors must be positive.")
-                input("Press Enter to continue...")
+                print("El número de pisos debe ser positivo.")
+                input("Presione Enter para continuar...")
                 return
             
-            rooms_per_floor = int(input("Enter number of rooms per floor: "))
+            rooms_per_floor = int(input("Ingrese número de habitaciones por piso: "))
             if rooms_per_floor <= 0:
-                print("Number of rooms must be positive.")
-                input("Press Enter to continue...")
+                print("El número de habitaciones debe ser positivo.")
+                input("Presione Enter para continuar...")
                 return
             
             self.simulation.setup_building(floors_count, rooms_per_floor)
             
-            # Add initial zombies
-            zombie_count = int(input("Enter number of initial zombies: "))
+            # Añadir zombis iniciales
+            zombie_count = int(input("Ingrese número de zombis iniciales: "))
             if zombie_count <= 0:
-                print("Number of zombies must be positive.")
-                input("Press Enter to continue...")
+                print("El número de zombis debe ser positivo.")
+                input("Presione Enter para continuar...")
                 return
             
             self.simulation.add_initial_zombies(zombie_count)
             
-            print("\nBuilding setup complete!")
-            input("Press Enter to continue...")
+            print("\n¡Configuración del edificio completada!")
+            input("Presione Enter para continuar...")
             
         except ValueError:
-            print("Please enter valid numbers.")
-            input("Press Enter to continue...")
+            print("Por favor, ingrese números válidos.")
+            input("Presione Enter para continuar...")
     
     def advance_simulation(self):
-        """Advance the simulation by one turn."""
+        """Avanza la simulación en un turno."""
         if not self.simulation.building:
             self.print_header()
-            print("No building configured yet. Use option 1 to set up a building.")
-            input("Press Enter to continue...")
+            print("No hay edificio configurado todavía. Use la opción 1 para configurar un edificio.")
+            input("Presione Enter para continuar...")
             return
         
         result = self.simulation.advance_turn()
@@ -128,97 +128,97 @@ class ZombieSimulationCLI:
         if "error" in result:
             print(f"Error: {result['error']}")
         else:
-            print(f"\nTurn {result['turn']} completed.")
-            print(f"Newly infested rooms: {len(result['newly_infested'])}")
-            print(f"Total infested rooms: {result['total_infested']}")
+            print(f"\nTurno {result['turn']} completado.")
+            print(f"Habitaciones recién infestadas: {len(result['newly_infested'])}")
+            print(f"Total de habitaciones infestadas: {result['total_infested']}")
             
             if result['game_over']:
-                print("\n🚨 GAME OVER: All rooms have been infested with zombies! 🚨")
+                print("\n🚨 FIN DEL JUEGO: ¡Todas las habitaciones han sido infestadas con zombis! 🚨")
         
-        input("\nPress Enter to continue...")
+        input("\nPresione Enter para continuar...")
     
     def clean_room(self):
-        """Clean zombies from a specific room."""
+        """Limpia los zombis de una habitación específica."""
         if not self.simulation.building:
             self.print_header()
-            print("No building configured yet. Use option 1 to set up a building.")
-            input("Press Enter to continue...")
+            print("No hay edificio configurado todavía. Use la opción 1 para configurar un edificio.")
+            input("Presione Enter para continuar...")
             return
         
         self.print_header()
         self.print_building_state()
         
-        print("\nCLEAN ROOM")
+        print("\nLIMPIAR HABITACIÓN")
         print("-" * 80)
         
         try:
-            floor_number = int(input("Enter floor number: "))
-            room_number = int(input("Enter room number: "))
+            floor_number = int(input("Ingrese número de piso: "))
+            room_number = int(input("Ingrese número de habitación: "))
             
             if self.simulation.clean_room(floor_number, room_number):
-                print(f"\nRoom {floor_number}-{room_number} has been cleaned of zombies.")
+                print(f"\nLa habitación {floor_number}-{room_number} ha sido limpiada de zombis.")
             else:
-                print(f"\nFailed to clean room {floor_number}-{room_number}. Check if it exists and has zombies.")
+                print(f"\nNo se pudo limpiar la habitación {floor_number}-{room_number}. Verifique si existe y tiene zombis.")
             
-            input("\nPress Enter to continue...")
+            input("\nPresione Enter para continuar...")
             
         except ValueError:
-            print("Please enter valid numbers.")
-            input("Press Enter to continue...")
+            print("Por favor, ingrese números válidos.")
+            input("Presione Enter para continuar...")
     
     def reset_sensor(self):
-        """Reset a sensor in a specific room."""
+        """Restablece un sensor en una habitación específica."""
         if not self.simulation.building:
             self.print_header()
-            print("No building configured yet. Use option 1 to set up a building.")
-            input("Press Enter to continue...")
+            print("No hay edificio configurado todavía. Use la opción 1 para configurar un edificio.")
+            input("Presione Enter para continuar...")
             return
         
         self.print_header()
         self.print_building_state()
         
-        print("\nRESET SENSOR")
+        print("\nRESTABLECER SENSOR")
         print("-" * 80)
         
         try:
-            floor_number = int(input("Enter floor number: "))
-            room_number = int(input("Enter room number: "))
+            floor_number = int(input("Ingrese número de piso: "))
+            room_number = int(input("Ingrese número de habitación: "))
             
             if self.simulation.reset_sensor(floor_number, room_number):
-                print(f"\nSensor in room {floor_number}-{room_number} has been reset.")
+                print(f"\nEl sensor en la habitación {floor_number}-{room_number} ha sido restablecido.")
             else:
-                print(f"\nFailed to reset sensor in room {floor_number}-{room_number}. Check if it exists.")
+                print(f"\nNo se pudo restablecer el sensor en la habitación {floor_number}-{room_number}. Verifique si existe.")
             
-            input("\nPress Enter to continue...")
+            input("\nPresione Enter para continuar...")
             
         except ValueError:
-            print("Please enter valid numbers.")
-            input("Press Enter to continue...")
+            print("Por favor, ingrese números válidos.")
+            input("Presione Enter para continuar...")
     
     def show_menu(self):
-        """Show the main menu and get user input."""
+        """Muestra el menú principal y obtiene la entrada del usuario."""
         self.print_header()
         
         if self.simulation.building:
             self.print_building_state()
         
-        print("\nMAIN MENU")
+        print("\nMENÚ PRINCIPAL")
         print("-" * 80)
-        print("1. Setup Building")
-        print("2. Show Building State")
-        print("3. Advance Simulation (Next Turn)")
-        print("4. Clean Room (Remove Zombies)")
-        print("5. Reset Sensor")
-        print("6. Exit")
+        print("1. Configurar Edificio")
+        print("2. Mostrar Estado del Edificio")
+        print("3. Avanzar Simulación (Siguiente Turno)")
+        print("4. Limpiar Habitación (Eliminar Zombis)")
+        print("5. Restablecer Sensor")
+        print("6. Salir")
         
-        choice = input("\nEnter your choice (1-6): ")
+        choice = input("\nIngrese su opción (1-6): ")
         
         if choice == "1":
             self.setup_building()
         elif choice == "2":
             self.print_header()
             self.print_building_state()
-            input("\nPress Enter to continue...")
+            input("\nPresione Enter para continuar...")
         elif choice == "3":
             self.advance_simulation()
         elif choice == "4":
@@ -227,14 +227,14 @@ class ZombieSimulationCLI:
             self.reset_sensor()
         elif choice == "6":
             self.running = False
-            print("\nThank you for using the Zombie IoT Sensor Simulation!")
+            print("\n¡Gracias por usar la Simulación de Sensores IoT con Zombis!")
             time.sleep(1)
         else:
-            print("\nInvalid choice. Please try again.")
-            input("Press Enter to continue...")
+            print("\nOpción inválida. Por favor, intente de nuevo.")
+            input("Presione Enter para continuar...")
     
     def run(self):
-        """Run the main application loop."""
+        """Ejecuta el bucle principal de la aplicación."""
         while self.running:
             self.show_menu()
 

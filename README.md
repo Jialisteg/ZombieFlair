@@ -1,64 +1,64 @@
-# Zombie IoT Sensor Simulation
+# Simulación de Sensores IoT con Zombis
 
-A Python CLI application that simulates a building infested with zombies, using IoT sensors to track the invasion.
+Una aplicación CLI en Python que simula un edificio infestado de zombis, utilizando sensores IoT para rastrear la invasión.
 
-## Description
+## Descripción
 
-This application simulates a scenario where a building is infested with zombies, and IoT sensors are used to detect their presence. The user can configure the building, add initial zombies, and simulate the spread of the infestation turn by turn.
+Esta aplicación simula un escenario donde un edificio está infestado de zombis, y se utilizan sensores IoT para detectar su presencia. El usuario puede configurar el edificio, añadir zombis iniciales y simular la propagación de la infestación turno por turno.
 
-## Features
+## Características
 
-- Configure a building with multiple floors and rooms
-- Add initial zombies to random rooms
-- Simulate zombie movement between adjacent rooms
-- Track the state of each room and sensor
-- Clean rooms of zombies
-- Reset sensors that have been triggered
+- Configurar un edificio con múltiples pisos y habitaciones
+- Añadir zombis iniciales a habitaciones aleatorias
+- Simular el movimiento de zombis entre habitaciones adyacentes
+- Rastrear el estado de cada habitación y sensor
+- Limpiar habitaciones de zombis
+- Restablecer sensores que han sido activados
 
-## Installation
+## Instalación
 
-1. Clone this repository:
+1. Clonar este repositorio:
    ```
    git clone https://github.com/yourusername/zombie-iot-simulation.git
    cd zombie-iot-simulation
    ```
 
-2. No additional dependencies are required as the application uses only Python standard libraries.
+2. No se requieren dependencias adicionales ya que la aplicación utiliza solo bibliotecas estándar de Python.
 
-## Usage
+## Uso
 
-1. Run the application:
+1. Ejecutar la aplicación:
    ```
-   python src/main.py
+   python run.py
    ```
 
-2. Follow the on-screen menu to interact with the simulation:
-   - Option 1: Setup Building - Configure the number of floors and rooms
-   - Option 2: Show Building State - Display the current state of the building
-   - Option 3: Advance Simulation - Move zombies to adjacent rooms
-   - Option 4: Clean Room - Remove zombies from a specific room
-   - Option 5: Reset Sensor - Reset a sensor to normal state
-   - Option 6: Exit - Quit the application
+2. Seguir el menú en pantalla para interactuar con la simulación:
+   - Opción 1: Configurar Edificio - Configurar el número de pisos y habitaciones
+   - Opción 2: Mostrar Estado del Edificio - Mostrar el estado actual del edificio
+   - Opción 3: Avanzar Simulación - Mover zombis a habitaciones adyacentes
+   - Opción 4: Limpiar Habitación - Eliminar zombis de una habitación específica
+   - Opción 5: Restablecer Sensor - Restablecer un sensor al estado normal
+   - Opción 6: Salir - Salir de la aplicación
 
-## Architecture
+## Arquitectura
 
-The application is structured using object-oriented programming principles:
+La aplicación está estructurada utilizando principios de programación orientada a objetos:
 
-- **Building**: Manages a collection of floors and provides methods to access rooms
-- **Floor**: Contains multiple rooms and handles connections between them
-- **Room**: Represents a physical space that may contain zombies and has a sensor
-- **Sensor**: Detects zombie presence and can be in "normal" or "alert" state
-- **Simulation**: Orchestrates the zombie movement logic and tracks game state
-- **ZombieSimulationCLI**: Provides the command-line interface for user interaction
+- **Edificio (Building)**: Administra una colección de pisos y proporciona métodos para acceder a las habitaciones
+- **Piso (Floor)**: Contiene múltiples habitaciones y maneja las conexiones entre ellas
+- **Habitación (Room)**: Representa un espacio físico que puede contener zombis y tiene un sensor
+- **Sensor**: Detecta la presencia de zombis y puede estar en estado "normal" o "alerta"
+- **Simulación (Simulation)**: Orquesta la lógica de movimiento de zombis y rastrea el estado del juego
+- **ZombieSimulationCLI**: Proporciona la interfaz de línea de comandos para la interacción del usuario
 
-### Zombie Movement Logic
+### Lógica de Movimiento de Zombis
 
-- Zombies spread to adjacent rooms each turn
-- Rooms are considered adjacent if they have consecutive room numbers on the same floor
-- Rooms are also connected vertically between floors (same room number on different floors)
-- When zombies enter a room, the sensor goes into alert state
-- The simulation ends when all rooms are infested
+- Los zombis se propagan a habitaciones adyacentes en cada turno
+- Las habitaciones se consideran adyacentes si tienen números de habitación consecutivos en el mismo piso
+- Las habitaciones también están conectadas verticalmente entre pisos (mismo número de habitación en diferentes pisos)
+- Cuando los zombis entran en una habitación, el sensor entra en estado de alerta
+- La simulación termina cuando todas las habitaciones están infestadas
 
-## License
+## Licencia
 
-This project is licensed under the MIT License - see the LICENSE file for details. 
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles. 

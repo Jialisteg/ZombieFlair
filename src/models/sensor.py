@@ -1,41 +1,41 @@
 class Sensor:
     """
-    Represents an IoT sensor that can detect zombies in a room.
-    The sensor can be in different states: 'normal' or 'alert'.
+    Representa un sensor IoT que puede detectar zombis en una habitación.
+    El sensor puede estar en diferentes estados: 'normal' o 'alerta'.
     """
     
     def __init__(self, id):
         """
-        Initialize a new sensor with a unique ID.
+        Inicializa un nuevo sensor con un ID único.
         
         Args:
-            id: A unique identifier for the sensor
+            id: Un identificador único para el sensor
         """
         self.id = id
-        self.state = "normal"  # Initial state is normal
+        self.state = "normal"  # Estado inicial es normal
     
     def set_alert(self):
-        """Set the sensor state to 'alert' when zombies are detected."""
+        """Establece el estado del sensor a 'alerta' cuando se detectan zombis."""
         self.state = "alert"
     
     def reset(self):
-        """Reset the sensor state to 'normal'."""
+        """Restablece el estado del sensor a 'normal'."""
         self.state = "normal"
     
     def is_alert(self):
         """
-        Check if the sensor is in alert state.
+        Comprueba si el sensor está en estado de alerta.
         
         Returns:
-            bool: True if the sensor is in alert state, False otherwise
+            bool: True si el sensor está en estado de alerta, False en caso contrario
         """
         return self.state == "alert"
     
     def __str__(self):
         """
-        String representation of the sensor.
+        Representación en cadena de texto del sensor.
         
         Returns:
-            str: A string showing the sensor ID and state
+            str: Una cadena que muestra el ID del sensor y su estado
         """
         return f"Sensor {self.id}: {self.state.upper()}" 

@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 """
-Entry point for the Zombie IoT Sensor Simulation.
-Run this script to start the application.
+Punto de entrada para la Simulación de Sensores IoT con Zombis.
+Ejecute este script para iniciar la aplicación.
 """
 
 import sys
 import os
 
-# Add the project root to the Python path
+# Añadir la raíz del proyecto a la ruta de Python
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from src.main import ZombieSimulationCLI

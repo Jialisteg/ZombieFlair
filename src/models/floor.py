@@ -2,44 +2,44 @@ from src.models.room import Room
 
 class Floor:
     """
-    Represents a floor in a building that contains multiple rooms.
+    Representa un piso en un edificio que contiene múltiples habitaciones.
     """
     
     def __init__(self, floor_number, rooms_count):
         """
-        Initialize a new floor with a specified number of rooms.
+        Inicializa un nuevo piso con un número específico de habitaciones.
         
         Args:
-            floor_number (int): The floor number
-            rooms_count (int): The number of rooms on this floor
+            floor_number (int): El número de piso
+            rooms_count (int): El número de habitaciones en este piso
         """
         self.floor_number = floor_number
         self.rooms = []
         
-        # Create rooms for this floor
+        # Crear habitaciones para este piso
         for room_number in range(rooms_count):
             self.rooms.append(Room(floor_number, room_number))
         
-        # Connect adjacent rooms on the same floor
+        # Conectar habitaciones adyacentes en el mismo piso
         self._connect_adjacent_rooms()
     
     def _connect_adjacent_rooms(self):
-        """Connect adjacent rooms on the same floor."""
+        """Conecta las habitaciones adyacentes en el mismo piso."""
         for i in range(len(self.rooms)):
-            # Connect to the next room (if not the last room)
+            # Conectar con la siguiente habitación (si no es la última habitación)
             if i < len(self.rooms) - 1:
                 self.rooms[i].add_adjacent_room(self.rooms[i + 1])
                 self.rooms[i + 1].add_adjacent_room(self.rooms[i])
     
     def get_room(self, room_number):
         """
-        Get a specific room on this floor.
+        Obtiene una habitación específica en este piso.
         
         Args:
-            room_number (int): The room number to retrieve
+            room_number (int): El número de habitación a recuperar
             
         Returns:
-            Room: The requested room, or None if not found
+            Room: La habitación solicitada, o None si no se encuentra
         """
         if 0 <= room_number < len(self.rooms):
             return self.rooms[room_number]
@@ -47,28 +47,28 @@ class Floor:
     
     def get_rooms(self):
         """
-        Get all rooms on this floor.
+        Obtiene todas las habitaciones en este piso.
         
         Returns:
-            list: A list of all Room objects on this floor
+            list: Una lista de todos los objetos Room en este piso
         """
         return self.rooms
     
     def get_rooms_with_zombies(self):
         """
-        Get all rooms on this floor that contain zombies.
+        Obtiene todas las habitaciones en este piso que contienen zombis.
         
         Returns:
-            list: A list of Room objects that have zombies
+            list: Una lista de objetos Room que tienen zombis
         """
         return [room for room in self.rooms if room.has_zombies]
     
     def __str__(self):
         """
-        String representation of the floor.
+        Representación en cadena de texto del piso.
         
         Returns:
-            str: A string showing the floor number and a summary of rooms
+            str: Una cadena que muestra el número de piso y un resumen de las habitaciones
         """
         zombie_count = len(self.get_rooms_with_zombies())
-        return f"Floor {self.floor_number}: {zombie_count}/{len(self.rooms)} rooms infested" 
+        return f"Piso {self.floor_number}: {zombie_count}/{len(self.rooms)} habitaciones infestadas" 

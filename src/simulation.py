@@ -3,22 +3,22 @@ from src.models.building import Building
 
 class Simulation:
     """
-    Manages the zombie simulation, including zombie movement and game state.
+    Gestiona la simulación de zombis, incluyendo el movimiento de zombis y el estado del juego.
     """
     
     def __init__(self):
-        """Initialize a new simulation with no building."""
+        """Inicializa una nueva simulación sin edificio."""
         self.building = None
         self.turn_count = 0
         self.game_over = False
     
     def setup_building(self, floors_count, rooms_per_floor):
         """
-        Set up a new building for the simulation.
+        Configura un nuevo edificio para la simulación.
         
         Args:
-            floors_count (int): The number of floors in the building
-            rooms_per_floor (int): The number of rooms on each floor
+            floors_count (int): El número de pisos en el edificio
+            rooms_per_floor (int): El número de habitaciones en cada piso
         """
         self.building = Building(floors_count, rooms_per_floor)
         self.turn_count = 0
@@ -27,13 +27,13 @@ class Simulation:
     
     def add_initial_zombies(self, count=1):
         """
-        Add initial zombies to random rooms in the building.
+        Añade zombis iniciales a habitaciones aleatorias en el edificio.
         
         Args:
-            count (int): The number of initial zombies to add
+            count (int): El número de zombis iniciales a añadir
             
         Returns:
-            list: The rooms where zombies were added
+            list: Las habitaciones donde se añadieron zombis
         """
         if not self.building:
             return []
@@ -42,10 +42,10 @@ class Simulation:
         if not all_rooms:
             return []
         
-        # Select random rooms for initial zombies
+        # Seleccionar habitaciones aleatorias para zombis iniciales
         zombie_rooms = []
         for _ in range(min(count, len(all_rooms))):
-            # Choose a room that doesn't already have zombies
+            # Elegir una habitación que no tenga ya zombis
             available_rooms = [room for room in all_rooms if not room.has_zombies]
             if not available_rooms:
                 break
@@ -58,21 +58,21 @@ class Simulation:
     
     def advance_turn(self):
         """
-        Advance the simulation by one turn, moving zombies to adjacent rooms.
+        Avanza la simulación en un turno, moviendo zombis a habitaciones adyacentes.
         
         Returns:
-            dict: Statistics about the turn, including new infestations
+            dict: Estadísticas sobre el turno, incluyendo nuevas infestaciones
         """
         if not self.building or self.game_over:
-            return {"error": "No building configured or game is over"}
+            return {"error": "No hay edificio configurado o el juego ha terminado"}
         
         self.turn_count += 1
         
-        # Get all rooms with zombies before movement
+        # Obtener todas las habitaciones con zombis antes del movimiento
         rooms_with_zombies = self.building.get_all_rooms_with_zombies()
         newly_infested_rooms = []
         
-        # For each room with zombies, spread to adjacent rooms
+        # Para cada habitación con zombis, extender a habitaciones adyacentes
         for room in rooms_with_zombies:
             adjacent_rooms = room.get_adjacent_rooms()
             
@@ -81,7 +81,7 @@ class Simulation:
                     adj_room.add_zombies()
                     newly_infested_rooms.append(adj_room)
         
-        # Check if all rooms are infested (game over condition)
+        # Comprobar si todas las habitaciones están infestadas (condición de fin de juego)
         all_rooms = self.building.get_all_rooms()
         if all(room.has_zombies for room in all_rooms):
             self.game_over = True
@@ -95,14 +95,14 @@ class Simulation:
     
     def clean_room(self, floor_number, room_number):
         """
-        Clean zombies from a specific room.
+        Limpia los zombis de una habitación específica.
         
         Args:
-            floor_number (int): The floor number
-            room_number (int): The room number
+            floor_number (int): El número de piso
+            room_number (int): El número de habitación
             
         Returns:
-            bool: True if room was cleaned successfully, False otherwise
+            bool: True si la habitación se limpió correctamente, False en caso contrario
         """
         room = self.building.get_room(floor_number, room_number)
         if room and room.has_zombies:
@@ -112,14 +112,14 @@ class Simulation:
     
     def reset_sensor(self, floor_number, room_number):
         """
-        Reset the sensor in a specific room.
+        Restablece el sensor en una habitación específica.
         
         Args:
-            floor_number (int): The floor number
-            room_number (int): The room number
+            floor_number (int): El número de piso
+            room_number (int): El número de habitación
             
         Returns:
-            bool: True if sensor was reset successfully, False otherwise
+            bool: True si el sensor se restableció correctamente, False en caso contrario
         """
         room = self.building.get_room(floor_number, room_number)
         if room:
@@ -129,13 +129,13 @@ class Simulation:
     
     def get_building_state(self):
         """
-        Get the current state of the building.
+        Obtiene el estado actual del edificio.
         
         Returns:
-            dict: A dictionary with the current building state
+            dict: Un diccionario con el estado actual del edificio
         """
         if not self.building:
-            return {"error": "No building configured"}
+            return {"error": "No hay edificio configurado"}
         
         return {
             "turn": self.turn_count,
@@ -148,9 +148,9 @@ class Simulation:
     
     def is_game_over(self):
         """
-        Check if the game is over (all rooms infested).
+        Comprueba si el juego ha terminado (todas las habitaciones infestadas).
         
         Returns:
-            bool: True if the game is over, False otherwise
+            bool: True si el juego ha terminado, False en caso contrario
         """
         return self.game_over 
