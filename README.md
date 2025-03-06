@@ -34,8 +34,8 @@ Esta aplicación simula un escenario donde un edificio está infestado de zombie
 2. No se requieren dependencias adicionales ya que la aplicación utiliza solo bibliotecas estándar de Python.
 
 ## Uso
-
-1. Ejecutar la aplicación:
+![Version CLI](img/InstruccionesJuego.png)
+1. Ejecutar la aplicación (Modo CLI):
    ```
    python run.py
    ```
@@ -60,6 +60,53 @@ Esta aplicación simula un escenario donde un edificio está infestado de zombie
    - Opción 7: Agregar Practicante - Funcionalidad en desarrollo
    - Opción 8: Volver al menú principal - Regresa al menú principal
 
+![Version Full](img/VersiónFull.png)
+
+## Ejecutar el Backend (FastAPI)
+
+1. Navega al directorio api:
+   ```bash
+   cd api
+   ```
+
+2. Instala las dependencias:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. Ejecuta el servidor de desarrollo:
+   ```bash
+   uvicorn index:app --host 0.0.0.0 --port 5000 --reload
+   ```
+
+El backend estará disponible en [http://localhost:5000](http://localhost:5000)
+
+## Ejecutar el Frontend (React)
+
+1. Abre una nueva terminal y navega al directorio frontend:
+   ```bash
+   cd frontend
+   ```
+
+2. Instala las dependencias:
+   ```bash
+   npm install
+   ```
+
+3. Inicia el servidor de desarrollo:
+   ```bash
+   npm start
+   ```
+
+El frontend estará disponible en [http://localhost:3000](http://localhost:3000)
+
+## Verificación de Funcionamiento
+
+1. Verifica el API: Abre [http://localhost:5000/api/simulation/state](http://localhost:5000/api/simulation/state) en tu navegador para comprobar que el API responde correctamente.
+
+2. Usa la interfaz: Abre [http://localhost:3000](http://localhost:3000) para interactuar con la aplicación completa.
+
+--------------------------------------------------------------------
 ## Arquitectura
 
 La aplicación está estructurada utilizando principios de programación orientada a objetos:
@@ -296,49 +343,6 @@ Además de la interfaz CLI, este proyecto ahora incluye una visualización web c
 - Node.js 18+
 - npm 8+
 
-### Ejecutar el Backend (FastAPI)
-
-1. Navega al directorio api:
-   ```bash
-   cd api
-   ```
-
-2. Instala las dependencias:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Ejecuta el servidor de desarrollo:
-   ```bash
-   uvicorn index:app --host 0.0.0.0 --port 5000 --reload
-   ```
-
-El backend estará disponible en [http://localhost:5000](http://localhost:5000)
-
-### Ejecutar el Frontend (React)
-
-1. Abre una nueva terminal y navega al directorio frontend:
-   ```bash
-   cd frontend
-   ```
-
-2. Instala las dependencias:
-   ```bash
-   npm install
-   ```
-
-3. Inicia el servidor de desarrollo:
-   ```bash
-   npm start
-   ```
-
-El frontend estará disponible en [http://localhost:3000](http://localhost:3000)
-
-## Verificación de Funcionamiento
-
-1. Verifica el API: Abre [http://localhost:5000/api/simulation/state](http://localhost:5000/api/simulation/state) en tu navegador para comprobar que el API responde correctamente.
-
-2. Usa la interfaz: Abre [http://localhost:3000](http://localhost:3000) para interactuar con la aplicación completa.
 
 ## Solución de Problemas Comunes
 
