@@ -1,0 +1,96 @@
+[2025-03-06 15:26:37,340] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 15:26:37,341] INFO - Simulación inicializada
+[2025-03-06 15:29:57,557] INFO - Edificio configurado con 1 pisos y 7 habitaciones regulares por piso
+[2025-03-06 15:29:57,558] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:30:07,805] INFO - Edificio configurado con 1 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:30:07,806] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:30:38,360] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:30:38,362] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:30:48,609] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 1
+[2025-03-06 15:30:50,018] INFO - Practicante añadido en piso 0, habitación 1
+[2025-03-06 15:31:27,131] INFO - Intento de limpiar habitación sin zombis: 0-4
+[2025-03-06 15:31:29,239] INFO - Intento de limpiar habitación sin zombis: 1-4
+[2025-03-06 15:31:30,442] INFO - Sensor restablecido: 1-4
+[2025-03-06 15:31:31,768] INFO - Sensor restablecido: 1-3
+[2025-03-06 15:31:33,169] INFO - Sensor restablecido: 1-2
+[2025-03-06 15:31:34,545] INFO - Arma secreta utilizada: 1 habitaciones limpiadas
+[2025-03-06 15:32:12,460] INFO - Intento de limpiar habitación sin zombis: 1-2
+[2025-03-06 15:32:17,744] INFO - Simulación inicializada
+[2025-03-06 15:32:26,393] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:32:26,394] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:32:44,321] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:32:44,321] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:32:45,203] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:32:45,203] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:36:26,906] INFO - Arma secreta utilizada: 0 habitaciones limpiadas
+[2025-03-06 15:38:25,806] INFO - Edificio configurado con 3 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:38:25,806] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:38:27,303] INFO - Edificio configurado con 3 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:38:27,304] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:39:58,968] INFO - Edificio configurado con 3 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:39:58,969] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:40:16,144] INFO - Edificio configurado con 3 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:40:16,144] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:40:19,538] INFO - Generación de zombis activada
+[2025-03-06 15:40:44,200] INFO - Usuario agregó un nuevo zombi manualmente en piso 0, habitación 5
+[2025-03-06 15:40:44,781] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 2
+[2025-03-06 15:40:45,383] INFO - Usuario agregó un nuevo zombi manualmente en piso 0, habitación 0
+[2025-03-06 15:40:45,910] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 4
+[2025-03-06 15:40:46,554] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 1
+[2025-03-06 15:40:49,102] INFO - Usuario agregó un nuevo zombi manualmente en piso 2, habitación 1
+[2025-03-06 15:40:49,621] INFO - Usuario agregó un nuevo zombi manualmente en piso 2, habitación 4
+[2025-03-06 15:40:50,311] INFO - Usuario agregó un nuevo zombi manualmente en piso 2, habitación 2
+[2025-03-06 15:40:51,101] INFO - Usuario agregó un nuevo zombi manualmente en piso 0, habitación 1
+[2025-03-06 15:41:19,749] INFO - Simulación inicializada
+[2025-03-06 15:41:22,348] INFO - Simulación inicializada
+[2025-03-06 15:41:24,255] INFO - Edificio configurado con 3 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:41:24,256] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:42:41,863] INFO - Practicante añadido en piso 2, habitación 1
+[2025-03-06 15:43:08,672] INFO - Intento de limpiar habitación sin zombis: 1-3
+[2025-03-06 15:43:10,392] INFO - Sensor restablecido: 1-3
+[2025-03-06 15:43:59,013] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 5
+[2025-03-06 15:44:20,477] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 5
+[2025-03-06 15:44:26,741] INFO - Usuario agregó un nuevo zombi manualmente en piso 2, habitación 2
+[2025-03-06 15:44:27,341] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 2
+[2025-03-06 15:44:28,456] INFO - Usuario agregó un nuevo zombi manualmente en piso 0, habitación 5
+[2025-03-06 15:44:48,875] INFO - Edificio configurado con 6 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:44:48,876] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:44:52,030] INFO - Edificio configurado con 3 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:44:52,030] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:44:54,150] INFO - Edificio configurado con 3 pisos y 7 habitaciones regulares por piso
+[2025-03-06 15:44:54,151] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:44:57,821] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:44:57,822] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:45:01,846] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:45:01,846] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 15:46:05,055] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:46:05,056] INFO - Añadiendo 3 zombis iniciales
+[2025-03-06 15:46:08,774] INFO - Edificio configurado con 3 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:46:08,775] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:46:29,128] INFO - Edificio configurado con 2 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:46:29,129] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:49:29,601] INFO - Edificio configurado con 2 pisos y 4 habitaciones regulares por piso
+[2025-03-06 15:49:29,601] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:49:36,148] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 0
+[2025-03-06 15:49:37,243] INFO - Usuario agregó un nuevo zombi manualmente en piso 0, habitación 1
+[2025-03-06 15:49:49,131] INFO - Habitación limpiada: 1-1
+[2025-03-06 15:49:51,836] INFO - Habitación limpiada: 1-3
+[2025-03-06 15:49:55,091] INFO - Usuario agregó un nuevo zombi manualmente en piso 1, habitación 4
+[2025-03-06 15:50:29,662] INFO - Edificio configurado con 2 pisos y 6 habitaciones regulares por piso
+[2025-03-06 15:50:29,662] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:50:37,708] INFO - Edificio configurado con 2 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:50:37,709] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:51:06,506] INFO - Practicante añadido en piso 0, habitación 2
+[2025-03-06 15:55:13,504] INFO - Edificio configurado con 2 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:55:13,505] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:55:17,810] INFO - Practicante añadido en piso 1, habitación 2
+[2025-03-06 15:55:58,412] INFO - Simulación inicializada
+[2025-03-06 15:56:16,924] INFO - Edificio configurado con 2 pisos y 5 habitaciones regulares por piso
+[2025-03-06 15:56:16,925] INFO - Añadiendo 4 zombis iniciales
+[2025-03-06 15:56:20,334] INFO - Sensor restablecido: 1-4
+[2025-03-06 15:56:22,908] INFO - Sensor restablecido: 0-5
+[2025-03-06 15:56:24,085] INFO - Sensor restablecido: 0-3
+[2025-03-06 15:56:29,034] INFO - Sensor restablecido: 1-5
+[2025-03-06 15:56:30,491] INFO - Sensor restablecido: 0-4
+[2025-03-06 15:56:32,029] INFO - Habitación limpiada: 0-2
+[2025-03-06 15:56:32,539] INFO - Sensor restablecido: 0-2

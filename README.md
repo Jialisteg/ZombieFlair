@@ -254,6 +254,79 @@ La aplicación utiliza un archivo de configuración `config.yaml` que permite pe
 
 Puede editar este archivo para ajustar el comportamiento de la aplicación según sus preferencias.
 
+## New Feature: Interactive Web Visualization
+
+In addition to the CLI interface, this project now includes a modern web-based visualization built with FastAPI and React.
+
+### Backend API (FastAPI)
+
+The FastAPI backend provides a RESTful API for interacting with the simulation:
+
+#### Running the API Server
+
+1. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
+
+2. Start the FastAPI server:
+   ```
+   python run_api.py
+   ```
+
+3. The API will be available at http://localhost:5000
+   - Interactive API documentation is available at: http://localhost:5000/docs
+   - Alternative API documentation: http://localhost:5000/redoc
+
+### Frontend (React)
+
+The React frontend provides a beautiful, interactive visualization of the building simulation:
+
+#### Running the Frontend
+
+1. Navigate to the frontend directory:
+   ```
+   cd frontend
+   ```
+
+2. Install the required dependencies:
+   ```
+   npm install
+   ```
+
+3. Start the development server:
+   ```
+   npm start
+   ```
+
+4. The web interface will be available at http://localhost:3000
+
+### Features of the Web Interface
+
+- **Building Visualization**: Interactive 3D-like representation of the building with all floors and rooms
+- **Real-time Updates**: See the simulation update in real-time
+- **Detailed Statistics**: Track the infestation rate and other metrics with charts and graphs
+- **Full Control**: All simulation commands available through an intuitive interface
+- **Room Selection**: Click on rooms to perform targeted actions like cleaning or resetting sensors
+- **Auto-run Mode**: Let the simulation run automatically with a configurable interval
+
+### Deployment
+
+To deploy the application:
+
+1. Build the React frontend:
+   ```
+   cd frontend
+   npm run build
+   ```
+
+2. Serve the FastAPI application with a production ASGI server like Uvicorn or Hypercorn:
+   ```
+   uvicorn src.api:app --host 0.0.0.0 --port 5000
+   ```
+
+3. For production deployment, consider using a process manager like Supervisor or PM2, and a reverse proxy like Nginx.
+
 ## Licencia
 
 Este proyecto está licenciado bajo la Licencia MIT - ver el archivo LICENSE para más detalles. 
