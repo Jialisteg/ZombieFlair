@@ -3,6 +3,7 @@ import os
 import sys
 import time
 from src.simulation import Simulation
+from src import logger
 
 class ZombieSimulationCLI:
     """
@@ -13,6 +14,7 @@ class ZombieSimulationCLI:
         """Inicializa el CLI con una nueva simulación."""
         self.simulation = Simulation()
         self.running = True
+        logger.debug("CLI inicializado")
     
     def clear_screen(self):
         """Limpia la pantalla del terminal."""
@@ -23,6 +25,8 @@ class ZombieSimulationCLI:
         self.clear_screen()
         print("=" * 80)
         print("🧟 SIMULACIÓN DE SENSORES IOT CON ZOMBIS 🧟".center(80))
+        if logger.is_debug_enabled():
+            print("🔍 MODO DEBUG ACTIVADO 🔍".center(80))
         print("=" * 80)
         print()
     
@@ -110,6 +114,7 @@ class ZombieSimulationCLI:
             
         except ValueError:
             print("Por favor, ingrese números válidos.")
+            logger.warning("Valores inválidos ingresados durante la configuración del edificio")
             input("Presione Enter para continuar...")
     
     def advance_simulation(self):
@@ -127,6 +132,7 @@ class ZombieSimulationCLI:
         
         if "error" in result:
             print(f"Error: {result['error']}")
+            logger.error(f"Error al avanzar turno: {result['error']}")
         else:
             print(f"\nTurno {result['turn']} completado.")
             print(f"Habitaciones recién infestadas: {len(result['newly_infested'])}")
@@ -164,6 +170,7 @@ class ZombieSimulationCLI:
             
         except ValueError:
             print("Por favor, ingrese números válidos.")
+            logger.warning("Valores inválidos ingresados durante la limpieza de habitación")
             input("Presione Enter para continuar...")
     
     def reset_sensor(self):
@@ -193,7 +200,56 @@ class ZombieSimulationCLI:
             
         except ValueError:
             print("Por favor, ingrese números válidos.")
+            logger.warning("Valores inválidos ingresados durante el restablecimiento del sensor")
             input("Presione Enter para continuar...")
+    
+    def toggle_debug_mode(self):
+        """Activa o desactiva el modo de depuración."""
+        new_state = not logger.is_debug_enabled()
+        logger.set_debug_mode(new_state)
+        
+        self.print_header()
+        if new_state:
+            print("🔍 Modo DEBUG ACTIVADO 🔍")
+            print("Los mensajes de depuración se mostrarán en la consola y se guardarán en el archivo de log.")
+        else:
+            print("🔍 Modo DEBUG DESACTIVADO 🔍")
+            print("Solo los mensajes de error se mostrarán en la consola, pero todos los niveles se guardarán en el archivo de log.")
+        
+        input("\nPresione Enter para continuar...")
+    
+    def show_debug_info(self):
+        """Muestra información de depuración si el modo DEBUG está activado."""
+        if not logger.is_debug_enabled():
+            self.print_header()
+            print("El modo DEBUG está desactivado. Active el modo DEBUG primero.")
+            input("\nPresione Enter para continuar...")
+            return
+            
+        self.print_header()
+        print("INFORMACIÓN DE DEPURACIÓN")
+        print("-" * 80)
+        
+        # Mostrar información básica
+        print(f"Archivo de log: {logger.log_file}")
+        print(f"Modo DEBUG: {'Activado' if logger.is_debug_enabled() else 'Desactivado'}")
+        
+        # Mostrar información de la simulación
+        if self.simulation.building:
+            state = self.simulation.get_building_state()
+            print("\nEstado de la simulación:")
+            for key, value in state.items():
+                print(f"  - {key}: {value}")
+            
+            # Mostrar información detallada de los pisos
+            print("\nInformación detallada de pisos:")
+            for floor_idx, floor in enumerate(self.simulation.building.floors):
+                zombie_rooms = floor.get_rooms_with_zombies()
+                print(f"  - Piso {floor_idx}: {len(zombie_rooms)}/{len(floor.rooms)} habitaciones infestadas")
+        else:
+            print("\nNo hay edificio configurado.")
+            
+        input("\nPresione Enter para continuar...")
     
     def show_menu(self):
         """Muestra el menú principal y obtiene la entrada del usuario."""
@@ -209,9 +265,14 @@ class ZombieSimulationCLI:
         print("3. Avanzar Simulación (Siguiente Turno)")
         print("4. Limpiar Habitación (Eliminar Zombis)")
         print("5. Restablecer Sensor")
-        print("6. Salir")
+        print("6. Activar/Desactivar modo DEBUG")
+        if logger.is_debug_enabled():
+            print("7. Mostrar información de depuración")
+        print("8. Salir")
         
-        choice = input("\nIngrese su opción (1-6): ")
+        max_option = 8
+        
+        choice = input(f"\nIngrese su opción (1-{max_option}): ")
         
         if choice == "1":
             self.setup_building()
@@ -226,8 +287,13 @@ class ZombieSimulationCLI:
         elif choice == "5":
             self.reset_sensor()
         elif choice == "6":
+            self.toggle_debug_mode()
+        elif choice == "7" and logger.is_debug_enabled():
+            self.show_debug_info()
+        elif choice == "8":
             self.running = False
             print("\n¡Gracias por usar la Simulación de Sensores IoT con Zombis!")
+            logger.info("Aplicación terminada por el usuario")
             time.sleep(1)
         else:
             print("\nOpción inválida. Por favor, intente de nuevo.")
@@ -235,8 +301,17 @@ class ZombieSimulationCLI:
     
     def run(self):
         """Ejecuta el bucle principal de la aplicación."""
-        while self.running:
-            self.show_menu()
+        try:
+            while self.running:
+                self.show_menu()
+        except KeyboardInterrupt:
+            print("\n\nAplicación interrumpida por el usuario.")
+            logger.info("Aplicación interrumpida por el usuario (KeyboardInterrupt)")
+        except Exception as e:
+            print(f"\n\nError inesperado: {str(e)}")
+            logger.critical(f"Error inesperado: {str(e)}", exc_info=True)
+        finally:
+            print("\n¡Gracias por usar la Simulación de Sensores IoT con Zombis!")
 
 
 if __name__ == "__main__":
