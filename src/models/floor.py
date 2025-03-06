@@ -1,23 +1,30 @@
 from src.models.room import Room
+from src.models.staircase import Staircase
 
 class Floor:
     """
     Representa un piso en un edificio que contiene múltiples habitaciones.
+    La primera habitación (índice 0) es siempre una escalera, y luego se añaden
+    las habitaciones regulares especificadas por el usuario.
     """
     
     def __init__(self, floor_number, rooms_count):
         """
-        Inicializa un nuevo piso con un número específico de habitaciones.
+        Inicializa un nuevo piso con un número específico de habitaciones regulares más una escalera.
         
         Args:
             floor_number (int): El número de piso
-            rooms_count (int): El número de habitaciones en este piso
+            rooms_count (int): El número de habitaciones regulares en este piso (sin contar la escalera)
         """
         self.floor_number = floor_number
         self.rooms = []
         
-        # Crear habitaciones para este piso
-        for room_number in range(rooms_count):
+        # Crear la escalera como la primera habitación (índice 0)
+        self.rooms.append(Staircase(floor_number, 0))
+        
+        # Crear habitaciones normales para este piso (a partir del índice 1)
+        # Se crean exactamente rooms_count habitaciones regulares
+        for room_number in range(1, rooms_count + 1):
             self.rooms.append(Room(floor_number, room_number))
         
         # Conectar habitaciones adyacentes en el mismo piso

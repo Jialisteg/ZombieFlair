@@ -1,5 +1,6 @@
 import random
 from src.models.building import Building
+from src.models.staircase import Staircase
 from src import logger
 
 class Simulation:
@@ -40,24 +41,82 @@ class Simulation:
         # Seleccionar una habitación aleatoria
         floor_idx, room_idx = random.choice(available_rooms)
         room = self.building.get_floor(floor_idx).get_room(room_idx)
-        room.has_zombies = True
-        room.sensor.set_alert()  # Activar el sensor cuando se añade un zombi
+        room.add_zombies()  # Usar el método específico de la clase
+        
         logger.debug(f"Nuevo zombi generado en piso {floor_idx}, habitación {room_idx}")
         return True
+    
+    def add_random_zombie(self):
+        """
+        Agrega un nuevo zombi en una habitación aleatoria (invocado por el usuario).
+        
+        Returns:
+            bool: True si se pudo agregar el zombi, False en caso contrario
+        """
+        success = self.generate_random_zombie()
+        if success:
+            logger.info("Usuario agregó un nuevo zombi manualmente")
+        return success
+    
+    def use_secret_weapon(self):
+        """
+        Utiliza el arma secreta para eliminar zombis aleatoriamente.
+        Tiene un 50% de probabilidad de eliminar cada zombi.
+        
+        Returns:
+            int: El número de habitaciones limpiadas
+        """
+        if not self.building:
+            return 0
+            
+        cleaned_count = 0
+        zombie_rooms = []
+        
+        # Identificar todas las habitaciones con zombis
+        for floor_idx, floor in enumerate(self.building.floors):
+            for room_idx, room in enumerate(floor.get_rooms()):
+                if room.has_zombies:
+                    zombie_rooms.append((floor_idx, room_idx))
+        
+        # Para cada habitación con zombis, hay un 50% de probabilidad de eliminarlos
+        for floor_idx, room_idx in zombie_rooms:
+            if random.random() < 0.5:  # 50% de probabilidad
+                room = self.building.get_floor(floor_idx).get_room(room_idx)
+                room.has_zombies = False  # Eliminar el zombi pero no resetear el sensor
+                cleaned_count += 1
+                logger.debug(f"Arma secreta eliminó zombi en piso {floor_idx}, habitación {room_idx}")
+        
+        logger.info(f"Arma secreta utilizada: {cleaned_count} habitaciones limpiadas")
+        return cleaned_count
     
     def setup_building(self, floors_count, rooms_per_floor):
         """
         Configura un nuevo edificio para la simulación.
         
         Args:
-            floors_count (int): El número de pisos en el edificio
-            rooms_per_floor (int): El número de habitaciones en cada piso
+            floors_count (int): El número de pisos
+            rooms_per_floor (int): El número de habitaciones regulares por piso (sin contar la escalera)
+            
+        Returns:
+            dict: Un diccionario con información sobre el edificio configurado
         """
-        logger.info(f"Configurando edificio: {floors_count} pisos, {rooms_per_floor} habitaciones por piso")
         self.building = Building(floors_count, rooms_per_floor)
-        self.turn = 0
-        logger.debug("Edificio configurado correctamente")
-        return self.building
+        logger.info(f"Edificio configurado con {floors_count} pisos y {rooms_per_floor} habitaciones regulares por piso")
+        
+        # Cada piso tiene rooms_per_floor habitaciones regulares + 1 escalera
+        rooms_with_stairs_per_floor = rooms_per_floor + 1
+        total_rooms = floors_count * rooms_with_stairs_per_floor
+        staircases_count = floors_count  # Una escalera por piso
+        normal_rooms_count = floors_count * rooms_per_floor  # Total de habitaciones regulares
+        
+        return {
+            "floors": floors_count,
+            "rooms_per_floor": rooms_per_floor,
+            "rooms_with_stairs_per_floor": rooms_with_stairs_per_floor,
+            "staircases": staircases_count,
+            "normal_rooms": normal_rooms_count,
+            "total_rooms": total_rooms
+        }
     
     def add_initial_zombies(self, count=1):
         """
@@ -85,8 +144,8 @@ class Simulation:
         
         for floor_idx, room_idx in locations:
             room = self.building.get_floor(floor_idx).get_room(room_idx)
-            room.has_zombies = True
-            room.sensor.set_alert()  # Activar el sensor cuando se añade un zombi
+            # Usar el método add_zombies que maneja correctamente tanto habitaciones como escaleras
+            room.add_zombies()
             zombies_added.append((floor_idx, room_idx))
             logger.debug(f"Zombi añadido en piso {floor_idx}, habitación {room_idx}")
             
@@ -112,24 +171,24 @@ class Simulation:
             rooms = floor.get_rooms()
             for room_idx, room in enumerate(rooms):
                 if room.has_zombies:
-                    # Obtener posibles movimientos (habitaciones adyacentes sin zombis)
-                    possible_moves = []
+                    # Obtener habitaciones adyacentes directamente del objeto habitación
+                    adjacent_rooms = room.get_adjacent_rooms()
                     
-                    # Habitaciones adyacentes horizontales
-                    for adj_idx in [room_idx - 1, room_idx + 1]:
-                        if 0 <= adj_idx < len(rooms) and not rooms[adj_idx].has_zombies:
-                            possible_moves.append((floor_idx, adj_idx))
+                    # Filtrar solo las habitaciones adyacentes sin zombis
+                    available_adj_rooms = []
                     
-                    # Habitaciones adyacentes verticales (por las escaleras)
-                    if room_idx == 0:  # Solo si el zombi está en la habitación con escaleras
-                        for adj_floor in [floor_idx - 1, floor_idx + 1]:
-                            if 0 <= adj_floor < len(self.building.floors):
-                                if not self.building.get_floor(adj_floor).get_room(0).has_zombies:
-                                    possible_moves.append((adj_floor, 0))
+                    for adj_room in adjacent_rooms:
+                        if not adj_room.has_zombies:
+                            # Encontrar los índices para esta habitación adyacente
+                            for adj_floor_idx, adj_floor in enumerate(self.building.floors):
+                                for adj_room_idx, r in enumerate(adj_floor.get_rooms()):
+                                    if r is adj_room:
+                                        available_adj_rooms.append((adj_floor_idx, adj_room_idx))
+                                        break
                     
                     # Si hay movimientos posibles, elegir uno al azar
-                    if possible_moves:
-                        target_floor, target_room = random.choice(possible_moves)
+                    if available_adj_rooms:
+                        target_floor, target_room = random.choice(available_adj_rooms)
                         # Guardar este movimiento para ejecutarlo después
                         zombie_movements.append({
                             'from': (floor_idx, room_idx),
@@ -147,8 +206,7 @@ class Simulation:
             
             # Mover el zombi
             source_room.has_zombies = False
-            target_room.has_zombies = True
-            target_room.sensor.set_alert()  # Activar el sensor de la nueva habitación
+            target_room.add_zombies()  # Usar el método para activar el sensor si hay
             
             # Registrar el cambio
             vacated_rooms.append((from_floor, from_room))
@@ -200,11 +258,14 @@ class Simulation:
                 logger.info(f"Intento de limpiar habitación sin zombis: {floor_number}-{room_number}")
                 return {"cleaned": False, "message": "No hay zombis en esta habitación"}
                 
-            room.has_zombies = False
-            # No reseteamos el sensor aquí, eso se hace con reset_sensor
+            # Usar el método remove_zombies() para manejar correctamente tanto habitaciones como escaleras
+            room.remove_zombies()
             
-            logger.info(f"Habitación limpiada: {floor_number}-{room_number}")
-            return {"cleaned": True, "message": "Habitación limpiada correctamente"}
+            # Nombre del tipo de habitación para el mensaje
+            room_type = "Escalera" if hasattr(room, 'connected_floors') else "Habitación"
+            
+            logger.info(f"{room_type} limpiada: {floor_number}-{room_number}")
+            return {"cleaned": True, "message": f"{room_type} limpiada correctamente"}
             
         except Exception as e:
             logger.error(f"Error al limpiar habitación: {str(e)}")
@@ -228,11 +289,16 @@ class Simulation:
         try:
             room = self.building.get_floor(floor_number).get_room(room_number)
             
+            # Verificar si la habitación es una escalera (no tiene sensor)
+            if hasattr(room, 'connected_floors'):
+                logger.info(f"Intento de restablecer sensor en una escalera: {floor_number}-{room_number}")
+                return {"reset": False, "message": "Las escaleras no tienen sensores"}
+            
             if not room.sensor.is_alert():
-                logger.info(f"Intento de restablecer sensor que no está en alerta: {floor_number}-{room_number}")
-                return {"reset": False, "message": "El sensor no está en alerta"}
+                logger.info(f"Intento de restablecer sensor que ya está normal: {floor_number}-{room_number}")
+                return {"reset": False, "message": "El sensor ya está en estado normal"}
                 
-            room.sensor.reset()
+            room.reset_sensor()
             
             logger.info(f"Sensor restablecido: {floor_number}-{room_number}")
             return {"reset": True, "message": "Sensor restablecido correctamente"}

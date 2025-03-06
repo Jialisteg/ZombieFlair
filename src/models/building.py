@@ -1,9 +1,11 @@
 from src.models.floor import Floor
+from src.models.staircase import Staircase
 
 class Building:
     """
     Representa un edificio con múltiples pisos y habitaciones.
     El edificio es el contenedor principal para la simulación de zombis.
+    Cada piso tiene una escalera (habitación 0) que conecta con los pisos adyacentes.
     """
     
     def __init__(self, floors_count, rooms_per_floor):
@@ -20,23 +22,30 @@ class Building:
         for floor_number in range(floors_count):
             self.floors.append(Floor(floor_number, rooms_per_floor))
         
-        # Conectar habitaciones entre pisos (conexiones verticales)
+        # Conectar escaleras entre pisos
         self._connect_floors()
     
     def _connect_floors(self):
-        """Conecta habitaciones entre pisos adyacentes."""
+        """
+        Conecta las escaleras entre pisos adyacentes para permitir
+        el movimiento vertical de zombis.
+        """
         for i in range(len(self.floors) - 1):
             current_floor = self.floors[i]
             next_floor = self.floors[i + 1]
             
-            # Conectar cada habitación a la habitación directamente arriba/abajo
-            for room_number in range(len(current_floor.get_rooms())):
-                current_room = current_floor.get_room(room_number)
-                next_room = next_floor.get_room(room_number)
+            # Obtenemos las escaleras de ambos pisos
+            current_staircase = current_floor.get_room(0)
+            next_staircase = next_floor.get_room(0)
+            
+            if isinstance(current_staircase, Staircase) and isinstance(next_staircase, Staircase):
+                # Conectamos las escaleras para permitir movimiento vertical
+                current_staircase.add_adjacent_room(next_staircase)
+                next_staircase.add_adjacent_room(current_staircase)
                 
-                if current_room and next_room:
-                    current_room.add_adjacent_room(next_room)
-                    next_room.add_adjacent_room(current_room)
+                # Guardamos referencia a los pisos conectados
+                current_staircase.add_connected_floor(next_floor)
+                next_staircase.add_connected_floor(current_floor)
     
     def get_floor(self, floor_number):
         """

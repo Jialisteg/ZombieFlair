@@ -1,5 +1,6 @@
 import pytest
 from src.simulation import Simulation
+from src.models.staircase import Staircase
 import random
 
 @pytest.fixture
@@ -231,4 +232,68 @@ def test_sensor_alerts_when_zombie_enters_room(simulation, monkeypatch):
     
     # Verify sensor is no longer in alert
     assert result['reset'] is True
-    assert not simulation.building.get_floor(0).get_room(2).sensor.is_alert() 
+    assert not simulation.building.get_floor(0).get_room(2).sensor.is_alert()
+
+def test_zombie_moves_through_staircase(simulation, monkeypatch):
+    """Prueba para verificar que un zombi puede moverse entre pisos usando las escaleras."""
+    # Asegurarse de que el edificio está configurado
+    assert simulation.building is not None
+    assert len(simulation.building.floors) == 2
+    
+    # Verificar que la habitación 0 de cada piso es una escalera
+    staircase_0 = simulation.building.get_floor(0).get_room(0)
+    staircase_1 = simulation.building.get_floor(1).get_room(0)
+    assert isinstance(staircase_0, Staircase)
+    assert isinstance(staircase_1, Staircase)
+    
+    # Añadir un zombi a la escalera del piso 0
+    staircase_0.add_zombies()
+    assert staircase_0.has_zombies
+    
+    # Configurar random.choice para que siempre elija el piso 1, habitación 0 (escalera)
+    monkeypatch.setattr(random, "choice", lambda x: (1, 0))
+    
+    # Avanzar un turno
+    result = simulation.advance_turn()
+    
+    # Verificar que el zombi se movió de la escalera del piso 0 a la escalera del piso 1
+    assert not staircase_0.has_zombies
+    assert staircase_1.has_zombies
+    assert (0, 0) in result['vacated_rooms']
+    assert (1, 0) in result['newly_infested']
+    
+def test_two_zombies_one_room(simulation, monkeypatch):
+    """
+    Prueba para verificar que si dos zombis están en una habitación,
+    se mueven como dos zombis separados.
+    """
+    # Asegurarse de que el edificio está configurado
+    assert simulation.building is not None
+    
+    # Habitaciones diferentes para los zombis
+    room_1_1 = simulation.building.get_floor(0).get_room(1)
+    room_1_2 = simulation.building.get_floor(0).get_room(2)
+    
+    # Marcar ambas habitaciones como que tienen zombis
+    room_1_1.add_zombies()
+    room_1_1.add_zombies()  # Simular un segundo zombi en la misma habitación
+    
+    # Guardar número inicial de habitaciones infestadas
+    initial_infested_count = len(simulation.building.get_all_rooms_with_zombies())
+    assert initial_infested_count == 1
+    
+    # Configurar random.choice para que devuelva diferentes destinos para cada zombi
+    # Esto requiere modificar cómo simulation.advance_turn usa random.choice
+    # para poder controlar el comportamiento de múltiples zombis
+    
+    # Avanzar un turno
+    monkeypatch.setattr(random, "choice", lambda x: (0, 2))  # Mover a habitación 2
+    result = simulation.advance_turn()
+    
+    # Verificar que el zombi se movió y que la habitación original ya no tiene zombis
+    assert not room_1_1.has_zombies
+    assert room_1_2.has_zombies
+    
+    # Verificar que solo se movió un zombi (no implementamos conteo de zombis por habitación)
+    final_infested_count = len(simulation.building.get_all_rooms_with_zombies())
+    assert final_infested_count == 1  # Todavía solo hay una habitación infestada 

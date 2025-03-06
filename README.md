@@ -51,6 +51,7 @@ La aplicación está estructurada utilizando principios de programación orienta
 - **Edificio (Building)**: Administra una colección de pisos y proporciona métodos para acceder a las habitaciones
 - **Piso (Floor)**: Contiene múltiples habitaciones y maneja las conexiones entre ellas
 - **Habitación (Room)**: Representa un espacio físico que puede contener zombis y tiene un sensor
+- **Escalera (Staircase)**: Un tipo especial de habitación que permite el movimiento vertical entre pisos
 - **Sensor**: Detecta la presencia de zombis y puede estar en estado "normal" o "alerta"
 - **Simulación (Simulation)**: Orquesta la lógica de movimiento de zombis y rastrea el estado del juego
 - **ZombieSimulationCLI**: Proporciona la interfaz de línea de comandos para la interacción del usuario
@@ -73,15 +74,18 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │       ├── building.py   # Clase Edificio
 │       ├── floor.py      # Clase Piso
 │       ├── room.py       # Clase Habitación 
+│       ├── staircase.py  # Clase Escalera
 │       └── sensor.py     # Clase Sensor
 ```
 
 ### Lógica de Movimiento de Zombis
 
 - Los zombis se propagan a habitaciones adyacentes en cada turno
-- Las habitaciones se consideran adyacentes si tienen números de habitación consecutivos en el mismo piso
-- Las habitaciones también están conectadas verticalmente entre pisos (mismo número de habitación en diferentes pisos)
-- Cuando los zombis entran en una habitación, el sensor entra en estado de alerta
+- **Movimiento Horizontal**: Las habitaciones se consideran adyacentes si tienen números de habitación consecutivos en el mismo piso
+- **Movimiento Vertical**: Los zombis pueden moverse entre pisos ÚNICAMENTE a través de las escaleras (habitación 0 de cada piso)
+- Las escaleras permiten a los zombis moverse hacia el piso superior o inferior
+- Las escaleras NO tienen sensores, pero permiten la propagación vertical de zombis
+- Cuando los zombis entran en una habitación normal, el sensor entra en estado de alerta
 - La simulación termina cuando todas las habitaciones están infestadas
 
 ## Modo DEBUG y Logging

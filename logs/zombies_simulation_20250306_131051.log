@@ -1,0 +1,8 @@
+[2025-03-06 13:10:51,571] INFO - Aplicación de Simulación de Sensores IoT con Zombis iniciada
+[2025-03-06 13:10:51,571] INFO - Iniciando aplicación de Simulación de Sensores IoT con Zombis
+[2025-03-06 13:10:51,572] INFO - Simulación inicializada
+[2025-03-06 13:11:05,086] INFO - Edificio configurado con 3 pisos y 3 habitaciones por piso
+[2025-03-06 13:11:06,383] INFO - Añadiendo 1 zombis iniciales
+[2025-03-06 13:11:06,384] CRITICAL - Error inesperado: 'NoneType' object has no attribute 'set_alert'
+Traceback:
+<traceback object at 0x0000022AA6439900>

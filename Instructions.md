@@ -15,9 +15,13 @@ Ok let's try to solve this in under an hour. Here are my insights so far:
     - **Between Floors**: Vertical movement. We will create an extra class called `Staircase` which will allow a zombie to move one floor upwards or downwards. A staircase will behave like a room, but will have no sensors, and it must have it's own Icon.
     - When zombies enter a new room, the corresponding sensor switches to `alert`.
 
+Some extra features:
+
+    * Clean room: This will somehow clean the room of the selected zombie. We will just assume that the Flair sensor are that good. Since there are no sensors in the stairs, we can't apply `clean_room` to a stairwell.
+
 6.- Testing: There will be a lot of bugs, and we need to write the right tests in order to be able to isolate and understand each core functionality (and fix it).
 
-Here are important tests that I can think of: 
+Here are a few important tests that I can think of: 
 
     -test_zombie_movement: We need to test that a Zombie can move to one room at a time (if he's in a room he has 3 possible movements, and if he's in a Staircase there are 5 possible movements). Try it on a Example building of 3x3, or greater.
 
