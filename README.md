@@ -87,11 +87,7 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 ├── package.json          # Configuración del proyecto en la raíz
 ├── Dockerfile            # Configuración para contenedor Docker
 ├── docker-compose.yml    # Configuración de Docker Compose
-├── vercel.json           # Configuración para despliegue en Vercel
-├── setup-for-vercel.sh   # Script de configuración para Vercel
 ├── .gitignore            # Archivos y carpetas ignorados por git
-├── .do/                  # Configuración para DigitalOcean
-│   └── app.yaml          # Definición de la aplicación para DigitalOcean
 ├── api/                  # API independiente para la visualización web
 │   ├── index.py          # Punto de entrada para FastAPI
 │   ├── requirements.txt  # Dependencias específicas para la API
@@ -124,7 +120,7 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │   │   ├── building.py   # Clase Edificio
 │   │   ├── floor.py      # Clase Piso
 │   │   ├── room.py       # Clase Habitación 
-│   │   ├── staircase.py  # Clase Escalera
+│   │   ├── staircase.py  # Clase Escalera (Nueva)
 │   │   ├── sensor.py     # Clase Sensor
 │   │   └── practicante.py # Clase Practicante (Nueva)
 │   └── api/              # Componentes específicos de la API dentro de src
