@@ -7,7 +7,7 @@ from src import logger
 
 class ZombieSimulationCLI:
     """
-    Interfaz de línea de comandos para la Simulación de Sensores IoT con Zombis.
+    Interfaz de línea de comandos para la Simulación de Sensores IoT con Zombies.
     """
     
     def __init__(self):
@@ -208,7 +208,7 @@ class ZombieSimulationCLI:
                     if logger.is_debug_enabled():
                         for i, (floor, room) in enumerate(result['newly_infested']):
                             from_floor, from_room = result['vacated_rooms'][i]
-                            print(f"  - Zombi movido: ({from_floor},{from_room}) → ({floor},{room})")
+                            print(f"  - Zombie movido: ({from_floor},{from_room}) → ({floor},{room})")
                 else:
                     print("No hubo movimiento de zombis en este turno.")
                     
@@ -228,9 +228,9 @@ class ZombieSimulationCLI:
             print("-" * 80)
             print("1. Avanzar otro turno (funciona con enter también)")
             print("2. Agregar otro Zombie")
-            print("3. Limpiar Habitación (Eliminar Zombis)")
+            print("3. Limpiar Habitación (Eliminar Zombies)")
             print("4. Restablecer Sensor")
-            print("5. Activar/Desactivar Generación de Zombis")
+            print("5. Activar/Desactivar Generación de Zombies")
             print("6. Utilizar el arma secreta")
             print("7. Agregar Practicante")
             print("8. Volver al menú principal")
@@ -426,7 +426,7 @@ class ZombieSimulationCLI:
             print("\nLEYENDA:")
             print("🚪 : Habitación normal")
             print("🪜 : Escalera (permite movimiento entre pisos)")
-            print("🧟 : Zombi")
+            print("🧟 : Zombie")
             print("🚨 : Sensor en alerta")
             print("🟢 : Sensor normal")
             print("🚶 : Practicante (debe ser protegido de los zombis)")
@@ -463,7 +463,7 @@ class ZombieSimulationCLI:
             self.show_debug_info()
         elif choice == "5":
             self.running = False
-            print("\n¡Gracias por usar la Simulación de Sensores IoT con Zombis!")
+            print("\n¡Gracias por usar la Simulación de Sensores IoT con Zombies!")
             logger.info("Aplicación terminada por el usuario")
             time.sleep(1)
         else:
@@ -473,7 +473,7 @@ class ZombieSimulationCLI:
     def show_welcome_screen(self):
         """Muestra la pantalla de bienvenida con las instrucciones del juego."""
         self.print_header()
-        print("¡Bienvenido a la Simulación de Sensores IoT con Zombis!")
+        print("¡Bienvenido a la Simulación de Sensores IoT con Zombies!")
         print("\nINSTRUCCIONES DEL JUEGO")
         print("-" * 80)
         print("En esta simulación, usted administrará un edificio infestado de zombis utilizando")
@@ -540,7 +540,7 @@ class ZombieSimulationCLI:
             print(f"\n\nError inesperado: {str(e)}")
             logger.critical(f"Error inesperado: {str(e)}\nTraceback:\n{sys.exc_info()[2]}")
         finally:
-            print("\n¡Gracias por usar la Simulación de Sensores IoT con Zombis!")
+            print("\n¡Gracias por usar la Simulación de Sensores IoT con Zombies!")
 
 
 if __name__ == "__main__":

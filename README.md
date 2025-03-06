@@ -137,11 +137,11 @@ La visualización del edificio se muestra en un formato claro y compacto:
 
 ```
 Piso 1:
-  Esc 0           Hab 1          Hab 2          Hab 3
+  Esc 0                  Hab 1            Hab 2                   Hab 3
   [🧟 🪜 🟢   ]     [   🚪 🟢   ]     [   🚪 🟢   ]     [   🚪 🟢   ]
 
 Piso 0:
-  Esc 0           Hab 1          Hab 2          Hab 3
+  Esc 0                  Hab 1            Hab 2                   Hab 3
   [   🪜      ]     [   🚪 🟢 🚶]     [🧟 🚪 🚨   ]     [   🚪 🟢   ]
 ```
 
