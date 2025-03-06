@@ -1,0 +1,40 @@
+# Configuración para la Simulación de Sensores IoT con Zombis
+
+# Configuración de la aplicación
+app:
+  nombre: "Simulación de Sensores IoT con Zombis"
+  version: "1.0.0"
+  modo_debug_inicial: false
+  locale: "es_ES"
+
+# Configuración de la simulación
+simulacion:
+  # Valores predeterminados (se pueden cambiar en la aplicación)
+  pisos_predeterminados: 3
+  habitaciones_predeterminadas: 4
+  zombis_iniciales_predeterminados: 2
+  
+  # Probabilidades
+  probabilidad_arma_secreta: 0.5  # Probabilidad de que el arma secreta elimine un zombi
+  probabilidad_generacion_zombi: 1.0  # Probabilidad de generar un nuevo zombi en cada turno (si está activado)
+  
+  # Límites
+  max_pisos: 10
+  max_habitaciones_por_piso: 20
+  max_zombis_iniciales: 50
+
+# Configuración de registro (logs)
+logs:
+  directorio: "logs"
+  formato: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  nivel_predeterminado: "INFO"  # Opciones: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  rotacion: true  # Habilitar rotación de logs
+  max_tamano_archivo: 10485760  # 10MB en bytes
+  num_archivos_backup: 5
+
+# Configuración de interfaz
+interfaz:
+  limpiar_pantalla: true
+  mostrar_leyenda: true
+  mostrar_estadisticas: true
+  tiempo_espera_mensajes: 2  # Segundos para mostrar mensajes de redirección 

@@ -14,6 +14,10 @@ Esta aplicación simula un escenario donde un edificio está infestado de zombis
 - Rastrear el estado de cada habitación y sensor
 - Limpiar habitaciones de zombis
 - Restablecer sensores que han sido activados
+- Uso del arma secreta para eliminar zombis aleatoriamente
+- Agregar zombis manualmente durante la simulación
+- Activar/desactivar la generación automática de zombis
+- Visualización mejorada del edificio con formato compacto
 - **Modo DEBUG** para diagnosticar problemas y ver información detallada
 - **Sistema de Logs** que registra todas las acciones de la aplicación
 
@@ -35,14 +39,24 @@ Esta aplicación simula un escenario donde un edificio está infestado de zombis
    ```
 
 2. Seguir el menú en pantalla para interactuar con la simulación:
+
+   ### Menú Principal
+   - Opción 0: Instrucciones del Juego - Muestra información sobre cómo jugar
    - Opción 1: Configurar Edificio - Configurar el número de pisos y habitaciones
-   - Opción 2: Mostrar Estado del Edificio - Mostrar el estado actual del edificio
-   - Opción 3: Avanzar Simulación - Mover zombis a habitaciones adyacentes
-   - Opción 4: Limpiar Habitación - Eliminar zombis de una habitación específica
-   - Opción 5: Restablecer Sensor - Restablecer un sensor al estado normal
-   - Opción 6: Activar/Desactivar modo DEBUG - Cambiar el nivel de detalle de los logs
-   - Opción 7: Mostrar información de depuración - Ver detalles internos (solo en modo DEBUG)
-   - Opción 8: Salir - Salir de la aplicación
+   - Opción 2: Comenzar Simulación - Inicia la simulación interactiva
+   - Opción 3: Activar/Desactivar modo DEBUG - Cambiar el nivel de detalle de los logs
+   - Opción 4: Mostrar información de depuración - Ver detalles internos (solo en modo DEBUG)
+   - Opción 5: Salir - Salir de la aplicación
+
+   ### Menú de Juego (Durante la Simulación)
+   - Opción 1: Avanzar otro turno - Avanza la simulación un turno (funciona con Enter)
+   - Opción 2: Agregar otro Zombie - Añade un zombi en una habitación aleatoria
+   - Opción 3: Limpiar Habitación - Elimina zombis de una habitación específica
+   - Opción 4: Restablecer Sensor - Restablece un sensor al estado normal
+   - Opción 5: Activar/Desactivar Generación de Zombis - Controla la generación automática
+   - Opción 6: Utilizar el arma secreta - Elimina zombis aleatoriamente (50% de probabilidad)
+   - Opción 7: Agregar Practicante - Funcionalidad en desarrollo
+   - Opción 8: Volver al menú principal - Regresa al menú principal
 
 ## Arquitectura
 
@@ -62,6 +76,7 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 
 ```
 ├── README.md             # Documentación del proyecto
+├── README_TESTS.md       # Documentación específica para tests
 ├── run.py                # Punto de entrada para ejecutar la aplicación
 ├── .gitignore            # Archivos y carpetas ignorados por git
 ├── logs/                 # Directorio donde se almacenan los archivos de log
@@ -69,6 +84,7 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │   ├── main.py           # CLI principal para interacción del usuario
 │   ├── simulation.py     # Lógica de simulación de zombis
 │   ├── logger.py         # Módulo de registro y depuración
+│   ├── fix.md            # Documentación sobre las correcciones de interfaz
 │   └── models/           # Modelos de datos para la aplicación
 │       ├── __init__.py   # Inicializador del paquete models
 │       ├── building.py   # Clase Edificio
@@ -76,7 +92,35 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │       ├── room.py       # Clase Habitación 
 │       ├── staircase.py  # Clase Escalera
 │       └── sensor.py     # Clase Sensor
+├── tests/                # Pruebas unitarias
+│   ├── __init__.py       # Inicializador del paquete tests
+│   ├── conftest.py       # Configuración y fixtures para tests
+│   ├── test_models.py    # Tests para modelos (Building, Floor, Room, etc.)
+│   └── test_simulation.py # Tests para la lógica de simulación
 ```
+
+### Visualización del Edificio
+
+La visualización del edificio se muestra en un formato claro y compacto:
+
+```
+Piso 1:
+  Esc 0           Hab 1          Hab 2          Hab 3
+  [🧟 🪜 🟢]       [   🚪 🟢]       [   🚪 🟢]       [   🚪 🟢]
+
+Piso 0:
+  Esc 0           Hab 1          Hab 2          Hab 3
+  [   🪜   ]       [   🚪 🟢]       [🧟 🚪 🚨]       [   🚪 🟢]
+```
+
+Donde:
+- `Esc`: Escalera - permite movimiento vertical entre pisos
+- `Hab`: Habitación regular
+- `🧟`: Presencia de zombi
+- `🪜`: Escalera
+- `🚪`: Puerta (habitación regular)
+- `🚨`: Sensor en estado de alerta
+- `🟢`: Sensor en estado normal
 
 ### Lógica de Movimiento de Zombis
 
@@ -87,6 +131,24 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 - Las escaleras NO tienen sensores, pero permiten la propagación vertical de zombis
 - Cuando los zombis entran en una habitación normal, el sensor entra en estado de alerta
 - La simulación termina cuando todas las habitaciones están infestadas
+
+### Funcionalidades Adicionales
+
+1. **Arma Secreta**:
+   - Permite eliminar zombis de varias habitaciones a la vez
+   - Cada zombi tiene 50% de probabilidad de ser eliminado
+   - Los sensores permanecen en alerta incluso si los zombis son eliminados
+
+2. **Practicante**:
+   - Funcionalidad en desarrollo para implementaciones futuras
+
+3. **Entrada Validada**:
+   - Durante la configuración, se validan todas las entradas
+   - Se puede escribir 'salir' en cualquier momento para volver al menú principal
+   - La aplicación solicita nuevos datos si los valores ingresados no son válidos
+
+4. **Redirección Automática**:
+   - Si se intenta comenzar la simulación sin un edificio configurado, la aplicación redirige automáticamente a la configuración del edificio
 
 ## Modo DEBUG y Logging
 
@@ -102,13 +164,87 @@ La aplicación cuenta con un sistema de registro que guarda todas las acciones e
 
 ### Activar modo DEBUG
 
-Para activar el modo DEBUG durante la ejecución, seleccione la opción 6 del menú principal. Cuando el modo DEBUG está activado:
+Para activar el modo DEBUG durante la ejecución, seleccione la opción 3 del menú principal. Cuando el modo DEBUG está activado:
 
 1. Se muestra un indicador en el encabezado de la aplicación
 2. Los mensajes de depuración se muestran en la consola
-3. Se habilita una opción adicional (7) que muestra información detallada de depuración
+3. Se habilita una opción adicional (4) que muestra información detallada de depuración
 
 Todos los mensajes, independientemente del nivel, siempre se guardan en el archivo de log para referencia futura.
+
+## Despliegue y Ejecución
+
+El proyecto ofrece múltiples formas de despliegue para adaptarse a diferentes entornos y necesidades.
+
+### 1. Script de Despliegue Automático
+
+Para una instalación rápida y sencilla, utilice el script de despliegue:
+
+```bash
+# Instalación básica
+python deploy.py
+
+# Instalación con entorno virtual personalizado
+python deploy.py --venv entorno_personalizado
+
+# Instalación forzada (recrear entorno virtual)
+python deploy.py --force
+
+# Instalación en modo desarrollo
+python deploy.py --dev
+```
+
+El script realizará las siguientes acciones:
+- Verificar la versión de Python
+- Crear un entorno virtual
+- Instalar dependencias
+- Configurar el proyecto
+- Crear scripts de lanzamiento específicos para cada plataforma
+
+Una vez completado, podrá ejecutar la aplicación con:
+- Windows: `ejecutar_simulacion.bat`
+- Linux/Mac: `./ejecutar_simulacion.sh`
+
+### 2. Instalación como Paquete Python
+
+También puede instalar el proyecto como un paquete Python:
+
+```bash
+# Crear y activar entorno virtual (recomendado)
+python -m venv .venv
+source .venv/bin/activate  # En Linux/Mac
+.venv\Scripts\activate     # En Windows
+
+# Instalar el paquete
+pip install -e .
+
+# Ejecutar la aplicación
+zombie-sim
+```
+
+### 3. Despliegue con Docker
+
+Para un despliegue aislado y consistente, utilice Docker:
+
+```bash
+# Construir y ejecutar con Docker Compose
+docker-compose up
+
+# O construir y ejecutar manualmente
+docker build -t zombies-iot-simulation .
+docker run -it --name zombies-iot -v ./logs:/app/logs zombies-iot-simulation
+```
+
+### 4. Configuración
+
+La aplicación utiliza un archivo de configuración `config.yaml` que permite personalizar diversos aspectos:
+
+- Valores predeterminados para la configuración del edificio
+- Probabilidades para eventos aleatorios
+- Configuración del sistema de logs
+- Parámetros de la interfaz
+
+Puede editar este archivo para ajustar el comportamiento de la aplicación según sus preferencias.
 
 ## Licencia
 
