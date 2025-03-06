@@ -34,7 +34,7 @@ Esta aplicación simula un escenario donde un edificio está infestado de zombie
 2. No se requieren dependencias adicionales ya que la aplicación utiliza solo bibliotecas estándar de Python.
 
 ## Uso
-![Version CLI](img/InstruccionesJuego.png)
+![Version CLI](img/InstruccionesIoT.png)
 1. Ejecutar la aplicación (Modo CLI):
    ```
    python run.py

@@ -24,7 +24,7 @@ class ZombieSimulationCLI:
         """Imprime el encabezado de la aplicación."""
         self.clear_screen()
         print("=" * 80)
-        print("🧟 SIMULACIÓN DE SENSORES IOT CON ZOMBIS 🧟".center(80))
+        print("🧟 SIMULACIÓN DE SENSORES IOT CON ZOMBIES 🧟".center(80))
         if logger.is_debug_enabled():
             print("🔍 MODO DEBUG ACTIVADO 🔍".center(80))
         print("=" * 80)
@@ -159,9 +159,9 @@ class ZombieSimulationCLI:
         print(f"- {rooms_per_floor} habitaciones regulares por piso (+ 1 escalera)")
         print(f"- Total de espacios: {result['total_rooms']} ({result['normal_rooms']} habitaciones + {result['staircases']} escaleras)")
         
-        # Añadir zombis iniciales
+        # Añadir zombies iniciales
         while True:
-            zombies_input = input("\nIngrese número de zombis iniciales: ")
+            zombies_input = input("\nIngrese número de zombies iniciales: ")
             
             if zombies_input.lower() == 'salir':
                 return
@@ -169,7 +169,7 @@ class ZombieSimulationCLI:
             try:
                 zombie_count = int(zombies_input)
                 if zombie_count <= 0:
-                    print("Error: El número de zombis debe ser positivo.")
+                    print("Error: El número de zombies debe ser positivo.")
                     continue
                 break
             except ValueError:
@@ -204,24 +204,24 @@ class ZombieSimulationCLI:
             else:
                 print(f"\nTurno {result['turn']} completado.")
                 if result['newly_infested']:
-                    print(f"Movimientos de zombis: {len(result['newly_infested'])}")
+                    print(f"Movimientos de zombies: {len(result['newly_infested'])}")
                     if logger.is_debug_enabled():
                         for i, (floor, room) in enumerate(result['newly_infested']):
                             from_floor, from_room = result['vacated_rooms'][i]
                             print(f"  - Zombie movido: ({from_floor},{from_room}) → ({floor},{room})")
                 else:
-                    print("No hubo movimiento de zombis en este turno.")
+                    print("No hubo movimiento de zombies en este turno.")
                     
                 if result['new_zombie_generated']:
                     floor, room = result['new_zombie_location']
-                    print(f"¡Se ha generado un nuevo zombi en la habitación {floor}-{room}!")
+                    print(f"¡Se ha generado un nuevo zombie en la habitación {floor}-{room}!")
                 print(f"Total de habitaciones infestadas: {result['total_infested']}")
                 
                 if result['game_over']:
                     if result.get('game_over_reason') == "practicante_capturado":
-                        print("\n🚨 FIN DEL JUEGO: ¡El practicante ha sido capturado por un zombi! 🚨")
+                        print("\n🚨 FIN DEL JUEGO: ¡El practicante ha sido capturado por un zombie! 🚨")
                     else:
-                        print("\n🚨 FIN DEL JUEGO: ¡Todas las habitaciones han sido infestadas con zombis! 🚨")
+                        print("\n🚨 FIN DEL JUEGO: ¡Todas las habitaciones han sido infestadas con zombies! 🚨")
             
             # Dar opciones al usuario
             print("\nMENÚ DE JUEGO")
@@ -244,9 +244,9 @@ class ZombieSimulationCLI:
                 result = self.simulation.add_random_zombie()
                 if result["added"]:
                     floor, room = result["floor"], result["room"]
-                    print(f"\n¡Se ha agregado un nuevo zombi en la habitación {floor}-{room}!")
+                    print(f"\n¡Se ha agregado un nuevo zombie en la habitación {floor}-{room}!")
                 else:
-                    print("\nNo se pudo agregar un nuevo zombi (todas las habitaciones podrían estar infestadas).")
+                    print("\nNo se pudo agregar un nuevo zombie (todas las habitaciones podrían estar infestadas).")
                 input("\nPresione Enter para continuar...")
             elif choice == "3":
                 self.clean_room()
@@ -255,19 +255,19 @@ class ZombieSimulationCLI:
             elif choice == "5":
                 enabled = self.simulation.toggle_zombie_generation()
                 if enabled:
-                    print("\n🧟 Generación de zombis ACTIVADA 🧟")
-                    print("Se generará un nuevo zombi aleatorio en cada turno.")
+                    print("\n🧟 Generación de zombies ACTIVADA 🧟")
+                    print("Se generará un nuevo zombie aleatorio en cada turno.")
                 else:
-                    print("\n🧟 Generación de zombis DESACTIVADA 🧟")
-                    print("No se generarán nuevos zombis durante la simulación.")
+                    print("\n🧟 Generación de zombies DESACTIVADA 🧟")
+                    print("No se generarán nuevos zombies durante la simulación.")
                 input("\nPresione Enter para continuar...")
             elif choice == "6":
-                # Utilizar arma secreta (elimina zombis de varias habitaciones)
+                # Utilizar arma secreta (elimina zombies de varias habitaciones)
                 cleaned_count = self.simulation.use_secret_weapon()
                 if cleaned_count > 0:
-                    print(f"\n¡BOOM! El arma secreta ha eliminado zombis de {cleaned_count} habitaciones.")
+                    print(f"\n¡BOOM! El arma secreta ha eliminado zombies de {cleaned_count} habitaciones.")
                 else:
-                    print("\nEl arma secreta no tuvo efecto. No había zombis para eliminar.")
+                    print("\nEl arma secreta no tuvo efecto. No había zombies para eliminar.")
                 input("\nPresione Enter para continuar...")
             elif choice == "7":
                 # Agregar Practicante
@@ -280,14 +280,14 @@ class ZombieSimulationCLI:
                     else:
                         floor, room = result["floor"], result["room"]
                         print(f"\n¡Se ha añadido un practicante 🚶 en la habitación {floor}-{room}!")
-                        print("El practicante se moverá aleatoriamente por el edificio. Si un zombi lo alcanza, ¡perderás el juego!")
+                        print("El practicante se moverá aleatoriamente por el edificio. Si un zombie lo alcanza, ¡perderás el juego!")
                 input("\nPresione Enter para continuar...")
             else:
                 # Opción 1 o Enter (continuar)
                 pass
     
     def clean_room(self):
-        """Limpia los zombis de una habitación específica."""
+        """Limpia los zombies de una habitación específica."""
         if not self.simulation.building:
             self.print_header()
             print("No hay edificio configurado todavía. Use la opción 1 para configurar un edificio.")
@@ -297,7 +297,7 @@ class ZombieSimulationCLI:
         self.print_header()
         self.print_building_state()
         
-        print("\nLIMPIAR HABITACIÓN (ELIMINAR ZOMBIS)")
+        print("\nLIMPIAR HABITACIÓN (ELIMINAR ZOMBIES)")
         print("-" * 80)
         
         try:
@@ -315,7 +315,7 @@ class ZombieSimulationCLI:
             if "error" in result:
                 print(f"\nError: {result['error']}")
             elif result["cleaned"]:
-                print(f"\nLa habitación {floor_number}-{room_number} ha sido limpiada. Los zombis han sido eliminados.")
+                print(f"\nLa habitación {floor_number}-{room_number} ha sido limpiada. Los zombies han sido eliminados.")
                 print("Nota: El sensor permanecerá en alerta hasta que se restablezca manualmente.")
             else:
                 print(f"\n{result['message']}")
@@ -429,7 +429,7 @@ class ZombieSimulationCLI:
             print("🧟 : Zombie")
             print("🚨 : Sensor en alerta")
             print("🟢 : Sensor normal")
-            print("🚶 : Practicante (debe ser protegido de los zombis)")
+            print("🚶 : Practicante (debe ser protegido de los zombies)")
         
         print("\nMENÚ PRINCIPAL")
         print("-" * 80)
@@ -476,7 +476,7 @@ class ZombieSimulationCLI:
         print("¡Bienvenido a la Simulación de Sensores IoT con Zombies!")
         print("\nINSTRUCCIONES DEL JUEGO")
         print("-" * 80)
-        print("En esta simulación, usted administrará un edificio infestado de zombis utilizando")
+        print("En esta simulación, usted administrará un edificio infestado de zombies utilizando")
         print("sensores IoT de Flair de última generación. Aquí está lo que necesita saber:")
         print("\n1. CONFIGURACIÓN:")
         print("   - Primero, configure el edificio especificando el número de pisos y habitaciones.")
@@ -488,7 +488,7 @@ class ZombieSimulationCLI:
         print("   - 🧟 = Habitación con zombies")
         print("   - 🚨 = Sensor Flair en estado de alerta")
         print("   - 🟢 = Sensor Flair en estado normal")
-        print("   - 🚶 = Practicante (debe ser protegido de los zombis)")
+        print("   - 🚶 = Practicante (debe ser protegido de los zombies)")
         print("\n3. MECÁNICA DEL JUEGO:")
         print("   - Los zombies se propagan a habitaciones adyacentes en cada turno.")
         print("   - Movimiento horizontal: Los zombies se mueven entre habitaciones del mismo piso.")
@@ -496,11 +496,11 @@ class ZombieSimulationCLI:
         print("     las escaleras (habitación 0 de cada piso, marcada con 🪜  ).")
         print("   - Las escaleras NO tienen sensores (faltó presupuesto), pero permiten a los zombies moverse arriba/abajo.")
         print("   - Puede limpiar habitaciones de zombies y restablecer sensores.")
-        print("   - Puede añadir un practicante (🚶) que se moverá automáticamente para evitar a los zombis.")
-        print("   - El juego termina cuando todas las habitaciones están infestadas o un zombi captura al practicante.")
+        print("   - Puede añadir un practicante (🚶) que se moverá automáticamente para evitar a los zombies.")
+        print("   - El juego termina cuando todas las habitaciones están infestadas o un zombie captura al practicante.")
         print("\n4. CARACTERÍSTICAS ESPECIALES:")
-        print("   - Arma secreta para eliminar zombis aleatoriamente (50% de probabilidad).")
-        print("   - Practicante que debe ser protegido de los zombis para evitar perder el juego.")
+        print("   - Arma secreta para eliminar zombies aleatoriamente (50% de probabilidad).")
+        print("   - Practicante que debe ser protegido de los zombies para evitar perder el juego.")
         print("   - Modo DEBUG disponible para ver información detallada.")
         print("   - Los eventos se registran en archivos de log para su revisión.")
         print("\nPara comenzar, seleccione la opción 1 en el menú principal para configurar el edificio.")
@@ -508,7 +508,7 @@ class ZombieSimulationCLI:
         input("\nPresione Enter para continuar...")
 
     def toggle_zombie_generation(self):
-        """Activa o desactiva la generación aleatoria de zombis."""
+        """Activa o desactiva la generación aleatoria de zombies."""
         if not self.simulation.building:
             self.print_header()
             print("No hay edificio configurado todavía. Use la opción 1 para configurar un edificio.")
@@ -518,11 +518,11 @@ class ZombieSimulationCLI:
         enabled = self.simulation.toggle_zombie_generation()
         self.print_header()
         if enabled:
-            print("🧟 Generación de zombis ACTIVADA 🧟")
-            print("Se generará un nuevo zombi aleatorio en cada turno.")
+            print("🧟 Generación de zombies ACTIVADA 🧟")
+            print("Se generará un nuevo zombie aleatorio en cada turno.")
         else:
-            print("🧟 Generación de zombis DESACTIVADA 🧟")
-            print("No se generarán nuevos zombis durante la simulación.")
+            print("🧟 Generación de zombies DESACTIVADA 🧟")
+            print("No se generarán nuevos zombies durante la simulación.")
         input("\nPresione Enter para continuar...")
 
     def run(self):
