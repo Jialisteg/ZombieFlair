@@ -1,24 +1,24 @@
 # Simulación de Sensores IoT de flair con Zombies
 
-Una aplicación CLI en Python que simula un edificio infestado de zombis, utilizando sensores IoT para rastrear la invasión.
+Una aplicación CLI en Python que simula un edificio infestado de zombies, utilizando sensores IoT para rastrear la invasión.
 
 ## Descripción
 
-Esta aplicación simula un escenario donde un edificio está infestado de zombis, y se utilizan sensores IoT para detectar su presencia. El usuario puede configurar el edificio, añadir zombies iniciales y simular la propagación de la infestación turno por turno.
+Esta aplicación simula un escenario donde un edificio está infestado de zombies, y se utilizan sensores IoT para detectar su presencia. El usuario puede configurar el edificio, añadir zombies iniciales y simular la propagación de la infestación turno por turno.
 
 
 
 ## Características
 
 - Configurar un edificio con múltiples pisos y habitaciones
-- Añadir zombis iniciales a habitaciones aleatorias
-- Simular el movimiento de zombis entre habitaciones adyacentes
+- Añadir zombies iniciales a habitaciones aleatorias
+- Simular el movimiento de zombies entre habitaciones adyacentes
 - Rastrear el estado de cada habitación y sensor
-- Limpiar habitaciones de zombis
+- Limpiar habitaciones de zombies
 - Restablecer sensores que han sido activados
 - Uso del ARMA SECRETA 
-- Agregar zombis manualmente durante la simulación
-- Activar/desactivar la generación automática de zombis
+- Agregar zombies manualmente durante la simulación
+- Activar/desactivar la generación automática de zombies
 - Visualización mejorada del edificio con formato compacto
 - **Modo DEBUG** para diagnosticar problemas y ver información detallada
 - **Sistema de Logs** que registra todas las acciones de la aplicación
@@ -52,11 +52,11 @@ Esta aplicación simula un escenario donde un edificio está infestado de zombis
 
    ### Menú de Juego (Durante la Simulación)
    - Opción 1: Avanzar otro turno - Avanza la simulación un turno (funciona con Enter)
-   - Opción 2: Agregar otro Zombie - Añade un zombi en una habitación aleatoria
-   - Opción 3: Limpiar Habitación - Elimina zombis de una habitación específica
+   - Opción 2: Agregar otro Zombie - Añade un zombie en una habitación aleatoria
+   - Opción 3: Limpiar Habitación - Elimina zombies de una habitación específica
    - Opción 4: Restablecer Sensor - Restablece un sensor al estado normal
-   - Opción 5: Activar/Desactivar Generación de Zombis - Controla la generación automática
-   - Opción 6: Utilizar el arma secreta - Elimina zombis aleatoriamente (50% de probabilidad)
+   - Opción 5: Activar/Desactivar Generación de zombies - Controla la generación automática
+   - Opción 6: Utilizar el ARMA SECRETA (probar)
    - Opción 7: Agregar Practicante - Funcionalidad en desarrollo
    - Opción 8: Volver al menú principal - Regresa al menú principal
 
@@ -66,11 +66,11 @@ La aplicación está estructurada utilizando principios de programación orienta
 
 - **Edificio (Building)**: Administra una colección de pisos y proporciona métodos para acceder a las habitaciones
 - **Piso (Floor)**: Contiene múltiples habitaciones y maneja las conexiones entre ellas
-- **Habitación (Room)**: Representa un espacio físico que puede contener zombis y tiene un sensor
+- **Habitación (Room)**: Representa un espacio físico que puede contener zombies y tiene un sensor
 - **Escalera (Staircase)**: Un tipo especial de habitación que permite el movimiento vertical entre pisos
-- **Sensor**: Detecta la presencia de zombis y puede estar en estado "normal" o "alerta"
-- **Practicante**: Representa al interno que se mueve por el edificio y debe ser protegido de los zombis
-- **Simulación (Simulation)**: Orquesta la lógica de movimiento de zombis y rastrea el estado del juego
+- **Sensor**: Detecta la presencia de zombies y puede estar en estado "normal" o "alerta"
+- **Practicante**: Representa al interno que se mueve por el edificio y debe ser protegido de los zombies
+- **Simulación (Simulation)**: Orquesta la lógica de movimiento de zombies y rastrea el estado del juego
 - **ZombieSimulationCLI**: Proporciona la interfaz de línea de comandos para la interacción del usuario
 
 ## Estructura del Proyecto
@@ -81,21 +81,53 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 ├── README.md             # Documentación del proyecto
 ├── README_TESTS.md       # Documentación específica para tests
 ├── run.py                # Punto de entrada para ejecutar la aplicación
+├── run_api.py            # Script para ejecutar solo la API
+├── setup.py              # Configuración para instalar como paquete Python
+├── requirements.txt      # Dependencias para el entorno de Python
+├── package.json          # Configuración del proyecto en la raíz
+├── Dockerfile            # Configuración para contenedor Docker
+├── docker-compose.yml    # Configuración de Docker Compose
+├── vercel.json           # Configuración para despliegue en Vercel
+├── setup-for-vercel.sh   # Script de configuración para Vercel
 ├── .gitignore            # Archivos y carpetas ignorados por git
+├── .do/                  # Configuración para DigitalOcean
+│   └── app.yaml          # Definición de la aplicación para DigitalOcean
+├── api/                  # API independiente para la visualización web
+│   ├── index.py          # Punto de entrada para FastAPI
+│   ├── requirements.txt  # Dependencias específicas para la API
+│   ├── Dockerfile        # Configuración Docker para la API
+│   ├── Dockerfile.do     # Configuración Docker para DigitalOcean
+│   └── vercel.json       # Configuración para despliegue en Vercel
+├── frontend/             # Aplicación React para visualización web
+│   ├── src/              # Código fuente de React
+│   │   ├── api/          # Configuración de llamadas a la API
+│   │   ├── components/   # Componentes de React
+│   │   ├── App.js        # Componente principal
+│   │   ├── index.js      # Punto de entrada
+│   │   └── index.css     # Estilos globales
+│   ├── public/           # Archivos estáticos públicos
+│   ├── package.json      # Dependencias y scripts para React
+│   ├── entrypoint.sh     # Script de entrada para el contenedor
+│   ├── Dockerfile        # Configuración Docker para el frontend
+│   ├── Dockerfile.do     # Configuración Docker para DigitalOcean
+│   ├── nginx.conf        # Configuración de Nginx para producción
+│   └── vercel.json       # Configuración para despliegue en Vercel
 ├── logs/                 # Directorio donde se almacenan los archivos de log
-├── src/                  # Código fuente principal
+├── src/                  # Código fuente principal de la simulación
 │   ├── main.py           # CLI principal para interacción del usuario
 │   ├── simulation.py     # Lógica de simulación de zombis
+│   ├── api.py            # Conexión entre la simulación y la API
 │   ├── logger.py         # Módulo de registro y depuración
 │   ├── fix.md            # Documentación sobre las correcciones de interfaz
-│   └── models/           # Modelos de datos para la aplicación
-│       ├── __init__.py   # Inicializador del paquete models
-│       ├── building.py   # Clase Edificio
-│       ├── floor.py      # Clase Piso
-│       ├── room.py       # Clase Habitación 
-│       ├── staircase.py  # Clase Escalera
-│       ├── sensor.py     # Clase Sensor
-│       └── practicante.py # Clase Practicante
+│   ├── models/           # Modelos de datos para la aplicación
+│   │   ├── __init__.py   # Inicializador del paquete models
+│   │   ├── building.py   # Clase Edificio
+│   │   ├── floor.py      # Clase Piso
+│   │   ├── room.py       # Clase Habitación 
+│   │   ├── staircase.py  # Clase Escalera
+│   │   ├── sensor.py     # Clase Sensor
+│   │   └── practicante.py # Clase Practicante
+│   └── api/              # Componentes específicos de la API dentro de src
 ├── tests/                # Pruebas unitarias
 │   ├── __init__.py       # Inicializador del paquete tests
 │   ├── conftest.py       # Configuración y fixtures para tests
@@ -103,7 +135,7 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │   └── test_simulation.py # Tests para la lógica de simulación
 ```
 
-### Visualización del Edificio
+### Visualización del Edificio (Versión CLI)
 
 La visualización del edificio se muestra en un formato claro y compacto:
 
@@ -120,37 +152,37 @@ Piso 0:
 Donde:
 - `Esc`: Escalera - permite movimiento vertical entre pisos
 - `Hab`: Habitación regular
-- `🧟`: Presencia de zombi
+- `🧟`: Presencia de zombie
 - `🪜`: Escalera
 - `🚪`: Puerta (habitación regular)
 - `🚨`: Sensor en estado de alerta
 - `🟢`: Sensor en estado normal
 - `🚶`: Practicante (debe ser protegido de los zombies)
 
-### Lógica de Movimiento de Zombis
+### Lógica de Movimiento de Zombies
 
-- Los zombis se propagan a habitaciones adyacentes en cada turno
+- Los zombies se propagan a habitaciones adyacentes en cada turno
 - **Movimiento Horizontal**: Las habitaciones se consideran adyacentes si tienen números de habitación consecutivos en el mismo piso
-- **Movimiento Vertical**: Los zombis pueden moverse entre pisos ÚNICAMENTE a través de las escaleras (habitación 0 de cada piso)
-- Las escaleras permiten a los zombis moverse hacia el piso superior o inferior
-- Las escaleras NO tienen sensores, pero permiten la propagación vertical de zombis
-- Cuando los zombis entran en una habitación normal, el sensor entra en estado de alerta
-- La simulación termina cuando todas las habitaciones están infestadas o un zombi captura al practicante
+- **Movimiento Vertical**: Los zombies pueden moverse entre pisos ÚNICAMENTE a través de las escaleras (habitación 0 de cada piso)
+- Las escaleras permiten a los zombies moverse hacia el piso superior o inferior
+- Las escaleras NO tienen sensores, pero permiten la propagación vertical de zombies
+- Cuando los zombies entran en una habitación normal, el sensor entra en estado de alerta
+- La simulación termina cuando todas las habitaciones están infestadas o un zombie captura al practicante
 
 ### Funcionalidades Adicionales
 
 1. **Arma Secreta**:
-   - Permite eliminar zombis de varias habitaciones a la vez
-   - Cada zombi tiene 50% de probabilidad de ser eliminado
-   - Los sensores permanecen en alerta incluso si los zombis son eliminados
+   - Permite eliminar zombies de varias habitaciones a la vez
+   - Cada zombie tiene 50% de probabilidad de ser eliminado
+   - Los sensores permanecen en alerta incluso si los zombies son eliminados
 
 2. **Practicante (Interno)**:
    - Simbolizado por el icono 🚶
    - Solo puede haber un practicante a la vez en el edificio
-   - Se mueve automáticamente en cada turno a habitaciones adyacentes sin zombis
+   - Se mueve automáticamente en cada turno a habitaciones adyacentes sin zombies
    - No activa los sensores al entrar en una habitación
-   - Si un zombi llega a la misma habitación que el practicante, el juego termina
-   - Añade un elemento de estrategia, ya que debes mantenerlo protegido de los zombis
+   - Si un zombie llega a la misma habitación que el practicante, el juego termina
+   - Añade un elemento de estrategia, ya que debes mantenerlo protegido de los zombies
 
 3. **Entrada Validada**:
    - Durante la configuración, se validan todas las entradas
