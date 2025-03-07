@@ -215,8 +215,7 @@ Donde:
 ### Funcionalidades Adicionales
 
 1. **Arma Secreta**:
-   - Permite eliminar zombies de varias habitaciones a la vez
-   - Cada zombie tiene 50% de probabilidad de ser eliminado
+   - Funcionalidad secreta
    - Los sensores permanecen en alerta incluso si los zombies son eliminados
 
 2. **Practicante (Interno)**:
@@ -286,7 +285,7 @@ El script realizará las siguientes acciones:
 - Configurar el proyecto
 - Crear scripts de lanzamiento específicos para cada plataforma
 
-Una vez completado, podrá ejecutar la aplicación con:
+Una vez completado, podrá ejecutar la aplicación con (eliminé este feature):
 - Windows: `ejecutar_simulacion.bat`
 - Linux/Mac: `./ejecutar_simulacion.sh`
 
