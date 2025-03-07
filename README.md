@@ -386,8 +386,10 @@ El equipo del practicante deberá entonces bloquear remotamente las puertas de l
 - Esconderse en la habitación toma un turno
 - Activar el cierre de puertas de manera remota toma dos turnos a partir de que el practicante entra a la habitación. Si el practicante escapa cuando tiene un zombie a una celda de distancia, el zombie alcanzaría a entrar a la habitación. 
 
-### Se modifica la agresividad de los zombies (se mueven de manera random hasta que tienen al practicante a algún rango "n" de distancia y luego van directamente hacia él).
 
 ### Se agrega el arma secreta:
 
 Cuando todo está perdido, se agrega un botón de utilizar arma secreta que permitirá cumplir todos los sueños de la empresa, salvar al practicante, triplicar la producción y ganar la felicidad absoluta.
+
+### *Próximo update*: Se modificará la agresividad de los zombies (se mueven de manera random hasta que tienen al practicante a algún rango "n" de distancia y luego van directamente hacia él).
+
