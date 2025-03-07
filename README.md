@@ -177,7 +177,12 @@ La organización de archivos y carpetas del proyecto es la siguiente:
 │   ├── test_models.py    # Tests para modelos (Building, Floor, Room, etc.)
 │   └── test_simulation.py # Tests para la lógica de simulación
 ```
+Adicionalmente se agrega:
 
+```
+├── Enunciado.md             # Enunciado del problema a resolver
+├── Instructions.md          # Algunas instrucciones de prompt-engineering que se pueden ir sugiriendo a herramientas de IA. Igual está super yapper el archivo, en realidad sería un archivo mucho más conciso.
+```
 ### Visualización del Edificio (Versión CLI)
 
 La visualización del edificio se muestra en un formato claro y compacto:
